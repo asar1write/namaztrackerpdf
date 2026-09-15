@@ -342,9 +342,9 @@
           </svg>
         </div>
         <h1 class="main-heading">Print Report</h1>
-        <p class="sub-heading">Paste your backup code below to format your A4 tracker layout.</p>
+        <p class="sub-heading">Paste your backup code or JSON below to format your A4 tracker layout.</p>
         
-        <textarea id="restoreCode" placeholder="Tap here to paste code..."></textarea>
+        <textarea id="restoreCode" placeholder="Tap here to paste code or JSON..."></textarea>
         
         <button class="btn-action" onclick="processCode()">
           GENERATE PDF
@@ -421,90 +421,178 @@
         const pastedRaw = document.getElementById('restoreCode').value;
         
         if (!pastedRaw.trim()) { 
-            showToast("Please paste the restore code first!"); 
+            showToast("Please paste the restore code or JSON first!"); 
             return; 
         }
         
         try {
-            let decodedStr = pastedRaw.trim();
-            
-            // Step 1: Detect Base64 logic for older versions (only if it has no colons/curly braces)
-            if (!decodedStr.includes(':') && !decodedStr.startsWith('{')) {
+            let rawInput = pastedRaw.trim();
+            const imported = {};
+            let parsedJson = null;
+
+            // Step 1: Detect Base64 JSON or plain string
+            if (!rawInput.startsWith('{') && !rawInput.startsWith('[') && !rawInput.includes(':')) {
                 try {
-                    const cleanBase64 = decodedStr.replace(/[^A-Za-z0-9+/=]/g, "");
-                    decodedStr = atob(cleanBase64);
+                    const cleanBase64 = rawInput.replace(/[^A-Za-z0-9+/=]/g, "");
+                    const decoded = atob(cleanBase64);
+                    if (decoded.startsWith('{') || decoded.startsWith('[')) {
+                        rawInput = decoded;
+                    }
                 } catch (e) {
-                    // Fallback to raw string if atob fails
+                    // Ignore Base64 decode errors
                 }
             }
 
-            // Remove empty spaces from string to prevent matching errors
-            decodedStr = decodedStr.replace(/\s+/g, "");
-            
-            const imported = {};
-            
-            // Format 1: OLD JSON
-            if (decodedStr.startsWith('{')) {
-                Object.assign(imported, JSON.parse(decodedStr));
-            } 
-            // Format 3: LATEST COMPACT FORMAT (e.g. 19-0:vvv000-19-1:111333)
-            else if (decodedStr.includes(':')) {
-                const regex = /(\d+)-(\d+):([a-zA-Z0-9]+)/g;
-                let match;
-                let foundAny = false;
-                
-                while ((match = regex.exec(decodedStr)) !== null) {
-                    foundAny = true;
-                    let y = parseInt(match[1], 10);
-                    // Standardize 2-digit years to 4-digits
-                    if (y < 100) y += 2000;
-                    
-                    let m = parseInt(match[2], 10);
-                    let daysStr = match[3];
-                    
-                    const key = `${y}_${m}`;
-                    imported[key] = daysStr;
-                }
-                
-                if (!foundAny) {
-                    throw new Error("Invalid format inside Latest Version code");
-                }
+            // Step 2: Try JSON Parsing
+            try {
+                parsedJson = JSON.parse(rawInput);
+            } catch (e) {
+                parsedJson = null;
             }
-            // Format 2: PREVIOUS DOT FORMAT (e.g. 19.0.30.v-...)
+
+            if (parsedJson) {
+                // Unwrap if JSON has a nested 'data' or 'logs' key
+                if (typeof parsedJson === 'object' && !Array.isArray(parsedJson) && parsedJson.data) {
+                    parsedJson = parsedJson.data;
+                }
+
+                // Sub-case A: Array of Objects
+                if (Array.isArray(parsedJson)) {
+                    parsedJson.forEach(item => {
+                        if (item.key && item.days) {
+                            imported[item.key] = typeof item.days === 'string' ? item.days : item.days.join('');
+                        } else if (item.year !== undefined && item.month !== undefined) {
+                            const key = `${item.year}_${item.month}`;
+                            if (typeof item.days === 'string') {
+                                imported[key] = item.days;
+                            } else if (Array.isArray(item.days)) {
+                                imported[key] = item.days.map(v => typeof v === 'number' ? v.toString(36) : '0').join('');
+                            }
+                        } else if (item.date) {
+                            // Date string format e.g. "2026-01-01"
+                            const dObj = new Date(item.date);
+                            if (!isNaN(dObj.getTime())) {
+                                const y = dObj.getFullYear();
+                                const m = dObj.getMonth();
+                                const d = dObj.getDate();
+                                const key = `${y}_${m}`;
+                                
+                                let val = 0;
+                                if (item.fajr || item.f) val |= 1;
+                                if (item.zuhr || item.z || item.d) val |= 2;
+                                if (item.asr || item.a) val |= 4;
+                                if (item.maghrib || item.m) val |= 8;
+                                if (item.isha || item.i) val |= 16;
+
+                                if (!imported[key]) {
+                                    const daysInMonth = new Date(y, m + 1, 0).getDate();
+                                    imported[key] = new Array(daysInMonth).fill('0');
+                                } else if (typeof imported[key] === 'string') {
+                                    imported[key] = imported[key].split('');
+                                }
+                                
+                                if (d - 1 < imported[key].length) {
+                                    imported[key][d - 1] = val.toString(36);
+                                }
+                            }
+                        }
+                    });
+
+                    Object.keys(imported).forEach(k => {
+                        if (Array.isArray(imported[k])) {
+                            imported[k] = imported[k].join('');
+                        }
+                    });
+                } 
+                // Sub-case B: Key-Value JSON Object (e.g., { "2026_0": "vvv000..." })
+                else if (typeof parsedJson === 'object' && parsedJson !== null) {
+                    Object.keys(parsedJson).forEach(key => {
+                        const val = parsedJson[key];
+                        if (typeof val === 'string') {
+                            imported[key] = val;
+                        } else if (Array.isArray(val)) {
+                            imported[key] = val.map(v => (typeof v === 'number' ? v : parseInt(v, 10) || 0).toString(36)).join('');
+                        } else if (typeof val === 'object' && val !== null) {
+                            if (val.days) {
+                                imported[key] = Array.isArray(val.days) ? val.days.map(v => v.toString(36)).join('') : String(val.days);
+                            }
+                        }
+                    });
+                }
+            } 
+            // Step 3: Fallback logic for legacy string formats
             else {
-                const entries = decodedStr.split('-');
-                const monthlyData = {};
-                
-                entries.forEach(entry => {
-                    const parts = entry.split('.');
-                    if (parts.length >= 4) {
-                        let y = parseInt(parts[0], 10);
-                        if (isNaN(y)) return;
+                let decodedStr = rawInput.replace(/\s+/g, "");
+
+                if (!decodedStr.includes(':') && !decodedStr.startsWith('{')) {
+                    try {
+                        const cleanBase64 = decodedStr.replace(/[^A-Za-z0-9+/=]/g, "");
+                        decodedStr = atob(cleanBase64);
+                    } catch (e) {
+                        // Fallback to raw string
+                    }
+                }
+
+                decodedStr = decodedStr.replace(/\s+/g, "");
+
+                // Format: LATEST COMPACT FORMAT (e.g. 19-0:vvv000-19-1:111333)
+                if (decodedStr.includes(':')) {
+                    const regex = /(\d+)-(\d+):([a-zA-Z0-9]+)/g;
+                    let match;
+                    let foundAny = false;
+                    
+                    while ((match = regex.exec(decodedStr)) !== null) {
+                        foundAny = true;
+                        let y = parseInt(match[1], 10);
                         if (y < 100) y += 2000;
                         
-                        let m = parseInt(parts[1], 10);
-                        let d = parseInt(parts[2], 10);
-                        let valStr = parts[3];
-                        let val = parseInt(valStr, 36) || 0;
-                        
-                        if (isNaN(m) || isNaN(d)) return;
+                        let m = parseInt(match[2], 10);
+                        let daysStr = match[3];
                         
                         const key = `${y}_${m}`;
-                        
-                        if (!monthlyData[key]) {
-                            const daysInMonth = new Date(y, m + 1, 0).getDate();
-                            monthlyData[key] = new Array(daysInMonth).fill(0);
-                        }
-                        
-                        if (d - 1 >= 0 && d - 1 < monthlyData[key].length) {
-                            monthlyData[key][d - 1] = val;
-                        }
+                        imported[key] = daysStr;
                     }
-                });
-                
-                Object.keys(monthlyData).forEach(key => {
-                    imported[key] = monthlyData[key].map(v => v.toString(36)).join('');
-                });
+                    
+                    if (!foundAny) {
+                        throw new Error("Invalid format inside code");
+                    }
+                } 
+                // Format: PREVIOUS DOT FORMAT (e.g. 19.0.30.v-...)
+                else {
+                    const entries = decodedStr.split('-');
+                    const monthlyData = {};
+                    
+                    entries.forEach(entry => {
+                        const parts = entry.split('.');
+                        if (parts.length >= 4) {
+                            let y = parseInt(parts[0], 10);
+                            if (isNaN(y)) return;
+                            if (y < 100) y += 2000;
+                            
+                            let m = parseInt(parts[1], 10);
+                            let d = parseInt(parts[2], 10);
+                            let valStr = parts[3];
+                            let val = parseInt(valStr, 36) || 0;
+                            
+                            if (isNaN(m) || isNaN(d)) return;
+                            
+                            const key = `${y}_${m}`;
+                            
+                            if (!monthlyData[key]) {
+                                const daysInMonth = new Date(y, m + 1, 0).getDate();
+                                monthlyData[key] = new Array(daysInMonth).fill(0);
+                            }
+                            
+                            if (d - 1 >= 0 && d - 1 < monthlyData[key].length) {
+                                monthlyData[key][d - 1] = val;
+                            }
+                        }
+                    });
+                    
+                    Object.keys(monthlyData).forEach(key => {
+                        imported[key] = monthlyData[key].map(v => v.toString(36)).join('');
+                    });
+                }
             }
 
             const sortedKeys = Object.keys(imported).sort((a, b) => {
@@ -514,7 +602,7 @@
             });
 
             if (sortedKeys.length === 0) { 
-                showToast("No valid data found in this code!"); 
+                showToast("No valid data found in this code or JSON!"); 
                 return; 
             }
 
@@ -593,7 +681,7 @@
 
         } catch (err) {
             console.error("Parse Error:", err);
-            showToast("Invalid Restore Code! Please check your copied code.");
+            showToast("Invalid Restore Code/JSON! Please check your copied code.");
             homeView.style.opacity = '1';
         }
     }

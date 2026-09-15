@@ -61,6 +61,50 @@
     }
 
     /* =========================================
+       FILE UPLOAD & DIVIDER STYLING
+       ========================================= */
+    .btn-upload {
+      width: 100%;
+      background: #ecfdf5;
+      color: #047857;
+      border: 2px dashed #10b981;
+      border-radius: 14px;
+      padding: 12px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.88em;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      transition: all 0.25s ease;
+    }
+    .btn-upload:active, .btn-upload:hover {
+      background: #d1fae5;
+      border-color: #059669;
+      transform: translateY(-1px);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 10px 0 14px 0;
+      color: #94a3b8;
+      font-size: 0.72em;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+    .divider span { padding: 0 10px; }
+
+    /* =========================================
        PREVIEW VIEW
        ========================================= */
     #previewView {
@@ -342,7 +386,22 @@
           </svg>
         </div>
         <h1 class="main-heading">Print Report</h1>
-        <p class="sub-heading">Paste your backup code or JSON below to format your A4 tracker layout.</p>
+        <p class="sub-heading">Upload your .json file or paste backup code below.</p>
+        
+        <!-- HIDDEN FILE INPUT -->
+        <input type="file" id="jsonFileInput" accept=".json,.txt" style="display: none;" onchange="handleFileSelect(event)">
+        
+        <!-- UPLOAD BUTTON -->
+        <button type="button" class="btn-upload" onclick="document.getElementById('jsonFileInput').click()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload .json File
+        </button>
+
+        <div class="divider"><span>OR PASTE CODE BELOW</span></div>
         
         <textarea id="restoreCode" placeholder="Tap here to paste code or JSON..."></textarea>
         
@@ -400,6 +459,26 @@
         toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 2500); 
     }
 
+    /* FILE UPLOAD HANDLER */
+    function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const content = e.target.result;
+            document.getElementById('restoreCode').value = content;
+            showToast("File uploaded! Generating PDF...");
+            setTimeout(() => {
+                processCode();
+            }, 300);
+        };
+        reader.onerror = function() {
+            showToast("Failed to read the file! Try pasting code instead.");
+        };
+        reader.readAsText(file);
+    }
+
     function handlePrint() {
         setTimeout(() => {
             try {
@@ -421,7 +500,7 @@
         const pastedRaw = document.getElementById('restoreCode').value;
         
         if (!pastedRaw.trim()) { 
-            showToast("Please paste the restore code or JSON first!"); 
+            showToast("Please upload a .json file or paste code first!"); 
             return; 
         }
         
@@ -469,7 +548,6 @@
                                 imported[key] = item.days.map(v => typeof v === 'number' ? v.toString(36) : '0').join('');
                             }
                         } else if (item.date) {
-                            // Date string format e.g. "2026-01-01"
                             const dObj = new Date(item.date);
                             if (!isNaN(dObj.getTime())) {
                                 const y = dObj.getFullYear();
@@ -504,7 +582,7 @@
                         }
                     });
                 } 
-                // Sub-case B: Key-Value JSON Object (e.g., { "2026_0": "vvv000..." })
+                // Sub-case B: Key-Value JSON Object
                 else if (typeof parsedJson === 'object' && parsedJson !== null) {
                     Object.keys(parsedJson).forEach(key => {
                         const val = parsedJson[key];
@@ -535,7 +613,6 @@
 
                 decodedStr = decodedStr.replace(/\s+/g, "");
 
-                // Format: LATEST COMPACT FORMAT (e.g. 19-0:vvv000-19-1:111333)
                 if (decodedStr.includes(':')) {
                     const regex = /(\d+)-(\d+):([a-zA-Z0-9]+)/g;
                     let match;
@@ -557,7 +634,6 @@
                         throw new Error("Invalid format inside code");
                     }
                 } 
-                // Format: PREVIOUS DOT FORMAT (e.g. 19.0.30.v-...)
                 else {
                     const entries = decodedStr.split('-');
                     const monthlyData = {};
@@ -681,7 +757,7 @@
 
         } catch (err) {
             console.error("Parse Error:", err);
-            showToast("Invalid Restore Code/JSON! Please check your copied code.");
+            showToast("Invalid File or Code! Please try again.");
             homeView.style.opacity = '1';
         }
     }

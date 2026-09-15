@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Namaz Tracker - Premium Pill UI</title>
+  <title>Namaz Tracker - A4 Perfect Print Edition</title>
   
   <!-- Premium Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,7 +22,9 @@
       -ms-overflow-style: none;  
       scrollbar-width: none;  
     }
-    body::-webkit-scrollbar, div::-webkit-scrollbar { display: none; }
+    body::-webkit-scrollbar, div::-webkit-scrollbar {
+      display: none; 
+    }
 
     /* =========================================
        ROCK-SOLID VIEW ENGINE
@@ -33,7 +35,7 @@
     }
 
     /* =========================================
-       HOME VIEW
+       HOME VIEW (KEYBOARD JUMP & SHIFT LOCKED)
        ========================================= */
     #homeView {
       z-index: 10; background-color: #f0fdf4;
@@ -43,69 +45,146 @@
       opacity: 0; 
     }
 
+    /* FIXED PIXEL HEIGHT - Prevents keyboard-induced jumping in AppCreator24 */
     .app-header-bg {
-      position: absolute; top: 0; left: 0; width: 100%; height: 250px;
+      position: absolute; top: 0; left: 0; width: 100%; height: 210px;
       background: linear-gradient(135deg, #022c22, #047857, #10b981);
       border-bottom-left-radius: 30px; border-bottom-right-radius: 30px;
       z-index: 1; box-shadow: 0 10px 25px rgba(4, 120, 87, 0.2);
     }
 
     #inputContainer {
-      background: rgba(255, 255, 255, 0.99); padding: 35px 25px; border-radius: 28px; 
+      background: rgba(255, 255, 255, 0.99); padding: 22px 18px; border-radius: 28px; 
       box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), inset 0 0 0 1px rgba(16, 185, 129, 0.1);
       width: 90%; max-width: 400px; text-align: center; 
-      position: relative; z-index: 5; margin: 120px auto 40px auto; 
+      position: relative; z-index: 5; margin: 90px auto 40px auto; 
     }
-
-    .icon-top {
-      width: 55px; height: 55px; background: #ecfdf5; border-radius: 16px; display: flex; justify-content: center; align-items: center;
-      margin: 0 auto 15px auto; color: #047857; box-shadow: 0 6px 12px rgba(4, 120, 87, 0.15);
-      position: relative; animation: floatIcon 3s ease-in-out infinite alternate;
-    }
-    @keyframes floatIcon { 0% { transform: translateY(0px); } 100% { transform: translateY(-4px); } }
-
-    .main-heading { font-family: 'Outfit', sans-serif; color: #0f172a; font-size: 1.8em; font-weight: 800; margin-bottom: 5px; }
-    .sub-heading { font-family: 'Poppins', sans-serif; color: #64748b; font-size: 0.85em; font-weight: 500; margin-bottom: 25px; line-height: 1.4; }
-
-    .btn-action { 
-        position: relative; overflow: hidden;
-        background: linear-gradient(135deg, #059669, #10b981); color: #fff; 
-        font-family: 'Outfit', sans-serif; padding: 16px 20px; border: none; border-radius: 16px; 
-        width: 100%; cursor: pointer; font-weight: 800; font-size: 1.1em;
-        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); 
-        transition: transform 0.1s ease, box-shadow 0.2s ease; 
-        display: flex; justify-content: center; align-items: center; gap: 10px; letter-spacing: 0.5px;
-    }
-    .btn-action:active { transform: scale(0.96); box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3); }
 
     /* =========================================
        PREVIEW VIEW
        ========================================= */
     #previewView {
       z-index: 20; background: #0f172a; 
-      display: none; opacity: 0;
+      display: none; 
+      opacity: 0;
       overflow-y: auto; overflow-x: hidden;
-      padding: 85px 10px 140px 10px; min-height: 100vh;
+      padding: 85px 10px 140px 10px;
+      min-height: 100vh;
       -webkit-overflow-scrolling: touch;
     }
+    
+    /* =========================================
+       ROYAL SPLASH SCREEN
+       ========================================= */
+    #splashScreen {
+      position: fixed; inset: 0; background: #011208; 
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      z-index: 9999; transition: opacity 0.5s ease-out;
+    }
 
+    .splash-glow {
+      position: absolute; width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(1, 18, 8, 0) 70%);
+      border-radius: 50%; animation: pulseGlow 2.5s ease-in-out infinite alternate;
+    }
+    @keyframes pulseGlow { 0% { transform: scale(0.85); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
+    .splash-content { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; width: 100%; padding: 0 20px; }
+
+    .svg-icon-wrapper { width: 110px; height: 110px; margin-bottom: 18px; display: flex; justify-content: center; align-items: center; }
+    .splash-svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0px 10px 20px rgba(253, 224, 71, 0.2)); }
+    .svg-path { stroke-dasharray: 400; stroke-dashoffset: 400; fill-opacity: 0; animation: drawLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards, fillIcon 0.6s ease-out 0.8s forwards; }
+    .ring-spin { transform-origin: 50px 50px; animation: spinRing 12s linear infinite; }
+    @keyframes drawLine { to { stroke-dashoffset: 0; } }
+    @keyframes fillIcon { to { fill-opacity: 1; filter: drop-shadow(0px 6px 12px rgba(253, 224, 71, 0.35)); } }
+    @keyframes spinRing { to { transform: rotate(360deg); } }
+
+    .text-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; }
+    .splash-title {
+      font-family: 'Outfit', sans-serif; font-size: 1.85em; font-weight: 900; letter-spacing: 3px; margin: 0; padding: 0; text-transform: uppercase;
+      background: linear-gradient(90deg, #FDE047, #ffffff, #FDE047); background-size: 200% auto;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; transform: translateY(12px);
+      filter: drop-shadow(0px 0px 10px rgba(253, 224, 71, 0.4));
+      animation: popUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards, shineText 3s linear infinite 1s;
+    }
+    .glowing-line {
+      width: 0px; height: 2.5px; background: linear-gradient(90deg, transparent, #34D399, transparent); margin: 8px 0; border-radius: 5px;
+      box-shadow: 0 0 8px rgba(52, 211, 153, 0.8); opacity: 0; animation: expandLine 0.6s ease-out 0.8s forwards;
+    }
+    .splash-subtitle {
+      font-family: 'Poppins', sans-serif; color: #a7f3d0; font-size: 0.75em; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; 
+      opacity: 0; text-shadow: 0 0 6px rgba(52, 211, 153, 0.5); animation: popUpFade 0.6s ease-out 0.9s forwards;
+    }
+    @keyframes shineText { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+    @keyframes popUpFade { to { opacity: 1; transform: translateY(0); } }
+    @keyframes expandLine { to { width: 120px; opacity: 1; } }
+
+    /* =========================================
+       TOAST NOTIFICATION
+       ========================================= */
+    .custom-toast {
+      position: fixed; top: 20px; left: 50%; transform: translate(-50%, -40px) scale(0.9);
+      background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      color: #fff; padding: 10px 20px; border-radius: 40px; font-size: 0.85em; font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); z-index: 10000; display: flex; align-items: center; gap: 8px;
+      width: max-content; max-width: 90vw; opacity: 0; pointer-events: none;
+      transition: transform 0.35s ease, opacity 0.25s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .custom-toast.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    .toast-icon { width: 16px; height: 16px; color: #f87171; }
+
+    /* =========================================
+       HOME VIEW UI ELEMENTS
+       ========================================= */
+    .icon-top {
+      width: 44px; height: 44px; background: #ecfdf5; border-radius: 12px; display: flex; justify-content: center; align-items: center;
+      margin: 0 auto 10px auto; color: #047857; box-shadow: 0 6px 12px rgba(4, 120, 87, 0.15);
+      position: relative; animation: floatIcon 3s ease-in-out infinite alternate;
+    }
+    @keyframes floatIcon { 0% { transform: translateY(0px); } 100% { transform: translateY(-3px); } }
+
+    .main-heading { font-family: 'Outfit', sans-serif; color: #0f172a; font-size: 1.6em; font-weight: 800; margin-bottom: 2px; }
+    .sub-heading { font-family: 'Poppins', sans-serif; color: #64748b; font-size: 0.78em; font-weight: 500; margin-bottom: 14px; line-height: 1.3; }
+
+    textarea {
+      width: 100%; height: 115px; padding: 12px; border-radius: 14px; border: 2px solid #e2e8f0; background: #f8fafc;
+      font-family: monospace; font-size: 0.95em; resize: none; outline: none; font-weight: 600; margin-bottom: 14px; color: #0f172a;
+      transition: all 0.25s ease; box-shadow: inset 0 2px 5px rgba(0,0,0,0.02);
+    }
+    textarea:focus { border-color: #10b981; background: #ffffff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.12); }
+
+    .btn-action { 
+        position: relative; overflow: hidden;
+        background: linear-gradient(135deg, #059669, #10b981); color: #fff; 
+        font-family: 'Outfit', sans-serif; padding: 13px 20px; border: none; border-radius: 14px; 
+        width: 100%; cursor: pointer; font-weight: 800; font-size: 1.05em;
+        box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35); 
+        transition: transform 0.1s ease; display: flex; justify-content: center; align-items: center; gap: 8px; letter-spacing: 0.5px;
+    }
+    .btn-action:active { transform: scale(0.96); }
+
+    /* =========================================
+       PREVIEW CONTROLS & PAGES
+       ========================================= */
     .preview-controls {
-        position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
+        position: fixed; top: 12px; 
+        left: 50%; transform: translateX(-50%);
         width: 92%; max-width: 380px; z-index: 1000; display: flex; justify-content: space-between; gap: 10px;
-        background: rgba(30, 41, 59, 0.88); padding: 8px 12px; border-radius: 100px;
+        background: rgba(30, 41, 59, 0.88); padding: 6px 10px; border-radius: 100px;
         backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.1);
     }
     
     .btn-secondary { 
         font-family: 'Outfit', sans-serif; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.05); 
-        padding: 10px 16px; border-radius: 50px; flex: 1; font-weight: 700; font-size: 0.95em; cursor: pointer; transition: background 0.15s ease;
+        padding: 8px 14px; border-radius: 50px; flex: 1; font-weight: 700; font-size: 0.9em; cursor: pointer;
+        transition: background 0.15s ease;
     }
     .btn-secondary:active { background: rgba(255,255,255,0.2); }
 
     .btn-primary { 
         font-family: 'Outfit', sans-serif; background: linear-gradient(135deg, #10b981, #047857); color: #fff; border: none; 
-        padding: 10px 16px; border-radius: 50px; flex: 1.5; font-weight: 700; font-size: 0.95em; cursor: pointer;
+        padding: 8px 14px; border-radius: 50px; flex: 1.5; font-weight: 700; font-size: 0.9em; cursor: pointer;
         box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); display: flex; justify-content: center; align-items: center; gap: 6px;
     }
     .btn-primary:active { transform: scale(0.96); }
@@ -113,106 +192,481 @@
     #printArea { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; margin: 0 auto; }
     
     /* =========================================
-       SCREEN PREVIEW: A4 STYLING & PILL UI
+       SCREEN PREVIEW: A4 STYLING
        ========================================= */
     .page {
-        width: 100%; max-width: 750px; aspect-ratio: 1 / 1.4142;
-        padding: 15px; background: #fff; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        border-radius: 12px; display: flex; flex-direction: column;
+        width: 100%; 
+        max-width: 750px; 
+        aspect-ratio: 1 / 1.4142; /* Strict A4 proportion on screen */
+        padding: 8px; 
+        background: #fff; 
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        border-radius: 6px; 
+        display: flex; flex-direction: column;
     }
 
-    /* Month Title */
-    .month-title {
-        text-align: center; font-family: 'Outfit', sans-serif; font-size: 1.2em; font-weight: 800;
-        color: #047857; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
-    }
-
-    /* Table Reset for Pill Design */
     table { 
-        width: 100%; height: 100%; border-collapse: separate; border-spacing: 0 5px; 
-        table-layout: fixed; font-family: 'Poppins', sans-serif; text-transform: uppercase;
+        width: 100%; 
+        height: 100%; 
+        border-collapse: collapse; 
+        table-layout: fixed; 
+        font-family: 'Poppins', sans-serif; 
+        text-transform: uppercase;
     }
     
-    th, td { text-align: center; font-weight: 700; padding: 2px; vertical-align: middle; border: none; }
+    th, td { border: 1.2px solid #cbd5e1; text-align: center; font-weight: 700; padding: 0; vertical-align: middle; }
     
-    /* Pill Headers */
-    th { color: #1e293b; font-size: clamp(9px, 2vw, 12px); font-family: 'Outfit', sans-serif; }
-    th .pill-header {
-        background: #e2e8f0; color: #0f172a; border-radius: 50px; padding: 6px 4px;
-        display: block; margin: 0 2px; font-weight: 800; letter-spacing: 0.5px;
+    /* Slim Header on Screen */
+    th { 
+        background: #047857; color: #fff; 
+        height: 30px; 
+        font-size: clamp(9px, 2vw, 13px); 
     }
-    th.primary-col .pill-header { background: #047857; color: #fff; }
-
-    /* Pill Data Cells */
-    .pill-date {
-        background: #f1f5f9; color: #334155; border-radius: 50px; padding: 5px 8px;
-        font-size: clamp(8px, 1.8vw, 11px); font-weight: 800; letter-spacing: 0.5px; display: inline-block; width: 90%;
+    
+    td { 
+        font-size: clamp(8px, 1.8vw, 11px); 
+        color: #1e293b; 
     }
-
-    .pill-check { 
-        width: clamp(14px, 3.5vw, 22px); height: clamp(14px, 3.5vw, 22px); 
-        border-radius: 50px; /* Perfect pill/circle shape */
+    
+    .checkbox-mock { 
+        width: clamp(10px, 2.5vw, 14px); 
+        height: clamp(10px, 2.5vw, 14px); 
+        border: 1.5px solid #cbd5e1; border-radius: 3px; 
         display: inline-flex; align-items: center; justify-content: center; 
-        background: #f8fafc; border: 2px solid #cbd5e1; margin: 0 auto; 
-        transition: all 0.2s;
+        background: #f8fafc; margin: 0 auto; 
     }
     
-    .pill-check.checked { background: #10b981; border-color: #10b981; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3); }
-    .pill-check.completed { background: #059669; border-color: #059669; }
-
-    /* Row highlight if all completed */
-    tr.completed-row .pill-date { background: #d1fae5; color: #065f46; }
-    tr.completed-row .pill-check { border-color: #059669; }
+    .checkbox-mock.checked { background: #10b981; border-color: #10b981; }
+    .checkbox-mock.completed { background: #059669; border-color: #059669; }
+    tr.completed-row td { background: #ecfdf5 !important; }
+    .day-label { letter-spacing: 0.2px; color: #0f172a; font-weight: 800; }
 
     /* =========================================
-       STRICT PRINT STYLES (PILL UI)
+       STRICT PRINT STYLES (100% FIXED FOR ANDROID)
        ========================================= */
     @media print {
         @page { size: A4 portrait; margin: 0; }
+        
         body { background: #fff !important; margin: 0; padding: 0; overflow: visible !important; height: auto !important; width: auto !important; }
+        
         #splashScreen, #homeView, .preview-controls, .custom-toast { display: none !important; }
+        
         #previewView { display: block !important; position: static !important; background: #fff !important; padding: 0 !important; opacity: 1 !important; visibility: visible !important; overflow: visible !important; height: auto !important;}
+        
         #printArea { display: block !important; gap: 0 !important; }
         
+        /* EXACT Physical A4 Dimensions (No shrinking!) */
         .page { 
-            width: 210mm !important; height: 297mm !important; max-width: none !important; aspect-ratio: auto !important; 
-            padding: 10mm !important; margin: 0 !important; box-shadow: none !important; border-radius: 0 !important; 
-            page-break-after: always !important; page-break-inside: avoid !important; 
+            width: 210mm !important; 
+            height: 297mm !important;
+            max-width: none !important; 
+            aspect-ratio: auto !important; 
+            padding: 8mm !important; 
+            margin: 0 !important; 
+            box-shadow: none !important; 
+            border-radius: 0 !important; 
+            page-break-after: always !important; 
+            page-break-inside: avoid !important; 
         }
         
-        table { height: calc(100% - 30px) !important; width: 100% !important; border-spacing: 0 4px !important; }
+        table { height: 100% !important; width: 100% !important; border-collapse: collapse !important; }
+        thead { display: table-header-group !important; }
+        tbody { display: table-row-group !important; }
+        tr { page-break-inside: avoid !important; break-inside: avoid !important; }
         
-        .month-title { font-size: 18px !important; margin-bottom: 8px !important; }
-        th .pill-header { font-size: 12px !important; padding: 6px 2px !important; margin: 0 1px !important; }
-        .pill-date { font-size: 11px !important; padding: 5px 4px !important; }
-        .pill-check { width: 18px !important; height: 18px !important; border-width: 1.5px !important; }
+        /* Big, Bold & Highly Visible Text in Print */
+        th { 
+            font-size: 14px !important; 
+            height: 35px !important; 
+        } 
+        
+        td { 
+            font-size: 13px !important; 
+            height: auto !important; /* Table automatically perfectly distributes rows */
+        }
+        .day-label { font-size: 13.5px !important; }
+        
+        .checkbox-mock { width: 16px !important; height: 16px !important; border-width: 1.5px !important; }
         
         * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
+  
+/* ===== ROBUST JSON UPLOAD UI ===== */
+.upload-zone{
+    width:100%;
+    max-width:420px;
+    min-height:150px;
+    box-sizing:border-box;
+    border:2px dashed rgba(0,255,255,.55);
+    border-radius:18px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px 16px;
+    margin:14px auto 10px;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color:transparent;
+    transition:transform .15s ease, border-color .15s ease, background .15s ease;
+    overflow:hidden;
+}
+.upload-zone:active{transform:scale(.985)}
+.upload-zone.dragover{border-color:#00ffff;background:rgba(0,255,255,.08)}
+.upload-icon{
+    width:48px;height:48px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-size:28px;font-weight:800;
+    border:1px solid rgba(0,255,255,.6);
+    margin-bottom:9px;
+}
+.upload-title{font-size:16px;font-weight:800;letter-spacing:.7px}
+.upload-subtitle{font-size:12px;opacity:.72;margin-top:6px;line-height:1.45}
+.selected-file{
+    width:100%;box-sizing:border-box;margin-top:11px;
+    font-size:12px;opacity:.9;white-space:nowrap;
+    overflow:hidden;text-overflow:ellipsis;
+}
+#generateBtn{width:100%;max-width:420px}
+@media (max-width:480px){
+    .upload-zone{min-height:140px;border-radius:16px;padding:17px 13px}
+}
 
-    /* Toast Notification CSS (Hidden for brevity, same as before) */
-    .custom-toast {
-      position: fixed; top: 20px; left: 50%; transform: translate(-50%, -40px) scale(0.9); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); color: #fff; padding: 12px 24px; border-radius: 40px; font-size: 0.9em; font-weight: 600; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); z-index: 10000; display: flex; align-items: center; gap: 8px; width: max-content; max-width: 90vw; opacity: 0; pointer-events: none; transition: transform 0.35s ease, opacity 0.25s ease; border: 1px solid rgba(255,255,255,0.1);
+
+/* ===== FINAL JSON-ONLY HOME SCREEN FIX ===== */
+textarea,
+#codeInput,
+#backupCode,
+#restoreCode,
+.code-input,
+.code-textarea {
+    display:none !important;
+}
+
+#inputContainer textarea {
+    display:none !important;
+}
+
+#inputContainer{
+    width:min(92vw, 460px) !important;
+    max-width:460px !important;
+    margin-left:auto !important;
+    margin-right:auto !important;
+    box-sizing:border-box !important;
+}
+
+#fileDropZone{
+    display:flex !important;
+    width:100% !important;
+    max-width:420px !important;
+    min-height:155px !important;
+    margin:14px auto 12px !important;
+    box-sizing:border-box !important;
+    align-items:center !important;
+    justify-content:center !important;
+}
+
+#generateBtn{
+    display:block !important;
+    width:100% !important;
+    max-width:420px !important;
+    margin:10px auto 0 !important;
+}
+
+@media (max-width:520px){
+    #inputContainer{
+        width:calc(100vw - 32px) !important;
+        max-width:none !important;
     }
-    .custom-toast.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
-    .toast-icon { width: 18px; height: 18px; color: #f87171; }
-    .toast-icon.success { color: #34d399; }
-    
-    /* Splash CSS (Same as before) */
-    #splashScreen { position: fixed; inset: 0; background: #011208; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease-out; }
-    .splash-glow { position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(1, 18, 8, 0) 70%); border-radius: 50%; animation: pulseGlow 2.5s ease-in-out infinite alternate; }
-    @keyframes pulseGlow { 0% { transform: scale(0.85); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
-    .splash-content { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; width: 100%; padding: 0 20px; }
-    .svg-icon-wrapper { width: 110px; height: 110px; margin-bottom: 18px; display: flex; justify-content: center; align-items: center; }
-    .splash-title { font-family: 'Outfit', sans-serif; font-size: 1.85em; font-weight: 900; letter-spacing: 3px; margin: 0; padding: 0; text-transform: uppercase; background: linear-gradient(90deg, #FDE047, #ffffff, #FDE047); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 1; filter: drop-shadow(0px 0px 10px rgba(253, 224, 71, 0.4)); }
-    .splash-subtitle { font-family: 'Poppins', sans-serif; color: #a7f3d0; font-size: 0.75em; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; margin-top:5px; opacity: 1;}
-  </style>
+    #fileDropZone,#generateBtn{
+        max-width:none !important;
+    }
+}
+
+@media print{
+    #homeView,#fileDropZone,#jsonFile,#generateBtn{
+        display:none !important;
+    }
+}
+
+
+/* ===== FINAL WORKING JSON UPLOADER ===== */
+#jsonFile{display:none !important}
+
+#fileDropZone.upload-zone{
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:100% !important;
+  max-width:420px !important;
+  min-height:145px !important;
+  box-sizing:border-box !important;
+  margin:14px auto 12px !important;
+  padding:20px 14px !important;
+  border:2px dashed rgba(4,120,87,.45) !important;
+  border-radius:18px !important;
+  background:rgba(16,185,129,.055) !important;
+  flex-direction:column !important;
+  align-items:center !important;
+  justify-content:center !important;
+  cursor:pointer !important;
+  user-select:none !important;
+  -webkit-user-select:none !important;
+  -webkit-tap-highlight-color:transparent !important;
+}
+
+#fileDropZone.upload-zone.dragover{
+  background:rgba(16,185,129,.14) !important;
+  border-color:#059669 !important;
+  transform:scale(.99);
+}
+
+#fileDropZone .upload-icon{
+  display:flex !important;
+  width:46px !important;
+  height:46px !important;
+  align-items:center !important;
+  justify-content:center !important;
+  border-radius:50% !important;
+  margin-bottom:8px !important;
+  font-size:27px !important;
+  font-weight:800 !important;
+  background:#ecfdf5 !important;
+  border:1px solid rgba(5,150,105,.25) !important;
+  color:#047857 !important;
+}
+
+#fileDropZone .upload-title{
+  display:block !important;
+  font-size:15px !important;
+  font-weight:800 !important;
+  letter-spacing:.6px !important;
+  color:#0f172a !important;
+}
+
+#fileDropZone .upload-subtitle{
+  display:block !important;
+  font-size:11px !important;
+  line-height:1.4 !important;
+  margin-top:5px !important;
+  color:#64748b !important;
+}
+
+#fileDropZone .selected-file{
+  display:block !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  margin-top:9px !important;
+  font-size:11px !important;
+  color:#047857 !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+  text-overflow:ellipsis !important;
+}
+
+#generateBtn{
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:8px !important;
+  width:100% !important;
+  max-width:420px !important;
+  margin:10px auto 0 !important;
+}
+
+#generateBtn:disabled{
+  opacity:.48 !important;
+  cursor:not-allowed !important;
+}
+
+#inputContainer{
+  width:calc(100% - 32px) !important;
+  max-width:460px !important;
+  box-sizing:border-box !important;
+}
+
+@media(max-width:480px){
+  #inputContainer{
+    width:calc(100% - 24px) !important;
+    padding:20px 14px !important;
+    border-radius:24px !important;
+  }
+  #fileDropZone.upload-zone{
+    min-height:138px !important;
+  }
+}
+
+@media print{
+  #homeView,#fileDropZone,#jsonFile,#generateBtn,.preview-controls{
+    display:none !important;
+  }
+  #previewView{
+    display:block !important;
+    opacity:1 !important;
+    padding:0 !important;
+    background:#fff !important;
+  }
+  #printArea{gap:0 !important}
+  .page{
+    box-shadow:none !important;
+    border-radius:0 !important;
+    max-width:none !important;
+    width:210mm !important;
+    height:297mm !important;
+    aspect-ratio:auto !important;
+    page-break-after:always !important;
+    break-after:page !important;
+  }
+  .page:last-child{
+    page-break-after:auto !important;
+    break-after:auto !important;
+  }
+  thead{display:table-header-group !important}
+  tbody{display:table-row-group !important}
+  tr{page-break-inside:avoid !important;break-inside:avoid !important}
+}
+
+
+/* ===== CHECKED-DAYS-ONLY PREVIEW ===== */
+.month-heading{
+  display:none !important;
+}
+
+.namaz-table .date-cell{
+  white-space:nowrap !important;
+  font-weight:700 !important;
+  letter-spacing:.2px !important;
+  font-variant-numeric:tabular-nums !important;
+}
+
+.namaz-table{
+  margin-top:0 !important;
+}
+
+@media screen and (max-width:520px){
+  .namaz-table .date-cell{
+    font-size:11px !important;
+    padding-left:7px !important;
+    padding-right:7px !important;
+  }
+}
+
+@media print{
+  .month-heading{
+    display:none !important;
+  }
+  .namaz-table{
+    margin-top:0 !important;
+  }
+}
+
+
+/* ===== FINAL MONTH + DATE OVERLAP FIX ===== */
+.namaz-table{
+  width:100% !important;
+  max-width:100% !important;
+  table-layout:fixed !important;
+  border-collapse:collapse !important;
+  margin:0 !important;
+}
+
+.namaz-table .date-column{
+  width:30% !important;
+}
+
+.namaz-table .namaz-column{
+  width:14% !important;
+}
+
+.namaz-table th,
+.namaz-table td{
+  box-sizing:border-box !important;
+  overflow:hidden !important;
+  text-overflow:clip !important;
+  white-space:nowrap !important;
+  vertical-align:middle !important;
+  text-align:center !important;
+}
+
+.namaz-table th{
+  font-size:9px !important;
+  line-height:1.05 !important;
+  padding:0 2px !important;
+}
+
+.namaz-table td{
+  font-size:10px !important;
+  line-height:1 !important;
+  padding:0 2px !important;
+}
+
+.namaz-table .date-cell{
+  width:30% !important;
+  min-width:30% !important;
+  font-size:10px !important;
+  font-weight:800 !important;
+  letter-spacing:0 !important;
+  font-variant-numeric:tabular-nums !important;
+  white-space:nowrap !important;
+  overflow:hidden !important;
+}
+
+.namaz-table .namaz-cell{
+  width:14% !important;
+}
+
+.namaz-table .checkbox-mock{
+  flex:0 0 auto !important;
+  margin:0 auto !important;
+}
+
+@media screen and (max-width:520px){
+  .namaz-table .date-column{width:31% !important}
+  .namaz-table .namaz-column{width:13.8% !important}
+  .namaz-table .date-cell{
+    font-size:8.5px !important;
+    padding:0 1px !important;
+  }
+  .namaz-table th{
+    font-size:7.5px !important;
+    padding:0 1px !important;
+  }
+  .namaz-table td{
+    font-size:8px !important;
+    padding:0 1px !important;
+  }
+}
+
+@media print{
+  .namaz-table{
+    width:100% !important;
+    table-layout:fixed !important;
+  }
+  .namaz-table .date-column{width:30% !important}
+  .namaz-table .namaz-column{width:14% !important}
+  .namaz-table .date-cell{
+    font-size:10px !important;
+    white-space:nowrap !important;
+    overflow:hidden !important;
+  }
+  .namaz-table th{
+    font-size:9px !important;
+  }
+  .namaz-table td{
+    font-size:10px !important;
+  }
+}
+
+</style>
 </head>
 <body>
 
   <!-- TOAST NOTIFICATION -->
   <div id="toastNotification" class="custom-toast">
-    <svg id="toastIconSvg" class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></svg>
+    <svg class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
+    </svg>
     <span id="toastMessage">Error Message</span>
   </div>
 
@@ -221,15 +675,26 @@
     <div class="splash-glow"></div>
     <div class="splash-content">
       <div class="svg-icon-wrapper">
-        <svg viewBox="0 0 100 100" style="width:100%; height:100%; filter: drop-shadow(0px 10px 20px rgba(253, 224, 71, 0.2));">
-          <circle cx="50" cy="50" r="45" stroke="#FDE047" stroke-width="0.8" stroke-dasharray="3 5" fill="none"/>
-          <path d="M 50,15 A 35,35 0 1,0 85,50 A 30,30 0 1,1 50,15 Z" stroke="#FDE047" stroke-width="1.5" fill="#FDE047" stroke-linejoin="round"/>
-          <path d="M 38 68 C 38 52, 44 48, 50 40 C 56 48, 62 52, 62 68 Z" stroke="#34D399" stroke-width="1.5" fill="#34D399" stroke-linejoin="round"/>
-          <path d="M 36 68 L 64 68 Z" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
+        <svg class="splash-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#FDE047" /><stop offset="100%" stop-color="#D97706" />
+            </linearGradient>
+            <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#34D399" /><stop offset="100%" stop-color="#047857" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="45" stroke="url(#goldGradient)" stroke-width="0.8" stroke-dasharray="3 5" fill="none" class="ring-spin"/>
+          <path class="svg-path" d="M 50,15 A 35,35 0 1,0 85,50 A 30,30 0 1,1 50,15 Z" stroke="url(#goldGradient)" stroke-width="1.5" fill="url(#goldGradient)" stroke-linejoin="round"/>
+          <path class="svg-path" d="M 38 68 C 38 52, 44 48, 50 40 C 56 48, 62 52, 62 68 Z" stroke="url(#emeraldGradient)" stroke-width="1.5" fill="url(#emeraldGradient)" stroke-linejoin="round"/>
+          <path class="svg-path" d="M 36 68 L 64 68 Z" stroke="url(#emeraldGradient)" stroke-width="2.5" stroke-linecap="round"/>
+          <line class="svg-path" x1="50" y1="40" x2="50" y2="25" stroke="url(#emeraldGradient)" stroke-width="2" stroke-linecap="round"/>
+          <path class="svg-path" d="M 50 30 L 51 32.5 L 53.5 32.5 L 51.5 34 L 52.5 36.5 L 50 35 L 47.5 36.5 L 48.5 34 L 46.5 32.5 L 49 32.5 Z" fill="url(#goldGradient)" stroke="none" style="animation-delay: 0.5s; opacity: 0;"/>
         </svg>
       </div>
       <div class="text-container">
         <h1 class="splash-title">NAMAZ TRACKER</h1>
+        <div class="glowing-line"></div>
         <p class="splash-subtitle">PDF GENERATOR</p>
       </div>
     </div>
@@ -238,23 +703,36 @@
   <!-- HOME VIEW -->
   <div id="homeView" class="view-section">
       <div class="app-header-bg"></div>
+
       <div id="inputContainer">
         <div class="icon-top">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line>
-            <line x1="9" y1="15" x2="12" y2="12"></line><line x1="15" y1="15" x2="12" y2="12"></line>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
           </svg>
         </div>
-        <h1 class="main-heading">Print Report</h1>
-        <p class="sub-heading">Upload your downloaded <br><strong>.json</strong> backup file to generate PDF.</p>
-        
-        <input type="file" id="jsonFileInput" accept=".json,.txt" style="display: none;" onchange="handleFileSelect(event)">
-        
-        <button type="button" class="btn-action" onclick="document.getElementById('jsonFileInput').click()">
-          UPLOAD .JSON FILE
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+
+        <h1 class="main-heading">JSON → PDF</h1>
+        <p class="sub-heading">Upload your Namaz Tracker .json backup to create your A4 tracker PDF.</p>
+
+        <input id="jsonFile" type="file" accept=".json,application/json,text/json" hidden>
+
+        <div id="fileDropZone" class="upload-zone" role="button" tabindex="0"
+             aria-label="Upload Namaz Tracker JSON file">
+          <div class="upload-icon">↑</div>
+          <div class="upload-title">UPLOAD JSON FILE</div>
+          <div class="upload-subtitle">Tap here to select your Namaz Tracker backup.json file</div>
+          <div id="selectedFileName" class="selected-file">No file selected</div>
+        </div>
+
+        <button id="generateBtn" class="btn-action" type="button" disabled>
+          GENERATE PDF
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+            <polyline points="12 5 19 12 12 19"></polyline>
           </svg>
         </button>
       </div>
@@ -267,228 +745,409 @@
         <button class="btn-primary" onclick="handlePrint()">
             Print File
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <polyline points="6 9 6 2 18 2 18 9"></polyline>
+                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                 <rect x="6" y="14" width="12" height="8"></rect>
             </svg>
         </button>
     </div>
+    
     <div id="printArea"></div>
   </div>
 
   <script>
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const splash = document.getElementById('splashScreen');
-            const home = document.getElementById('homeView');
-            splash.style.opacity = '0';
-            home.style.display = 'block';
-            void home.offsetWidth; 
-            setTimeout(() => { splash.style.display = 'none'; home.style.opacity = '1'; }, 500); 
-        }, 1500); 
+(function () {
+  "use strict";
+
+  let selectedJsonFile = null;
+  let toastTimer = null;
+
+  const $ = (id) => document.getElementById(id);
+
+  function showToast(message) {
+    const toast = $("toastNotification");
+    const msg = $("toastMessage");
+    if (!toast || !msg) return;
+    msg.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  function openPicker() {
+    const input = $("jsonFile");
+    if (input) input.click();
+  }
+
+  function validJsonFile(file) {
+    if (!file) return false;
+    const name = String(file.name || "").toLowerCase();
+    const type = String(file.type || "").toLowerCase();
+    return name.endsWith(".json") ||
+           type === "application/json" ||
+           type === "text/json" ||
+           type === "";
+  }
+
+  function fiveNamaz(value) {
+    if (Array.isArray(value)) {
+      return Array.from({ length: 5 }, (_, i) =>
+        value[i] === true || value[i] === 1 || value[i] === "true"
+      );
+    }
+
+    // Compatibility for numeric bit-mask values.
+    if (typeof value === "number" && Number.isFinite(value)) {
+      return [0, 1, 2, 3, 4].map(i => (value & (1 << i)) !== 0);
+    }
+
+    return [false, false, false, false, false];
+  }
+
+  function getState(payload) {
+    if (!payload || typeof payload !== "object") return null;
+
+    if (payload.namazState && typeof payload.namazState === "object") {
+      return payload.namazState;
+    }
+
+    // Also accept a direct date-keyed JSON object.
+    const dateKeys = Object.keys(payload).filter(k =>
+      /^\d{4}-\d{1,2}-\d{1,2}$/.test(k)
+    );
+    return dateKeys.length ? payload : null;
+  }
+
+  function makeMonths(state) {
+    const months = new Map();
+
+    Object.keys(state).forEach(key => {
+      const match = key.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);
+      if (!match) return;
+
+      const year = Number(match[1]);
+      const month = Number(match[2]); // Namaz Tracker export uses 0 = January
+      const day = Number(match[3]);
+
+      if (!Number.isInteger(year) ||
+          !Number.isInteger(month) || month < 0 || month > 11 ||
+          !Number.isInteger(day) || day < 1) return;
+
+      const maxDay = new Date(year, month + 1, 0).getDate();
+      if (day > maxDay) return;
+
+      const monthKey = year + "-" + String(month).padStart(2, "0");
+
+      if (!months.has(monthKey)) {
+        months.set(monthKey, {
+          year,
+          month,
+          days: new Map()
+        });
+      }
+
+      months.get(monthKey).days.set(day, fiveNamaz(state[key]));
     });
 
-    let toastTimeout;
-    function showToast(message, isSuccess = false) {
-        const toast = document.getElementById('toastNotification');
-        const toastMsg = document.getElementById('toastMessage');
-        const icon = document.getElementById('toastIconSvg');
-        toastMsg.innerText = message;
-        if (isSuccess) {
-            icon.classList.add('success');
-            icon.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
-        } else {
-            icon.classList.remove('success');
-            icon.innerHTML = `<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>`;
-        }
-        toast.classList.add('show');
-        clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000); 
+    return Array.from(months.values()).sort(
+      (a, b) => a.year - b.year || a.month - b.month
+    );
+  }
+
+  function checkMarkup(checked) {
+    return checked
+      ? '<span class="checkbox-mock checked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span>'
+      : '<span class="checkbox-mock"></span>';
+  }
+
+  function renderPDF(state, profileName) {
+    const printArea = $("printArea");
+    if (!printArea) throw new Error("PDF preview area not found.");
+
+    const months = makeMonths(state);
+    if (!months.length) {
+      throw new Error("No valid Namaz records found in this JSON file.");
     }
 
-    function handleFileSelect(event) {
-        const file = event.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            showToast("Processing data...", true);
-            setTimeout(() => { processCode(e.target.result); }, 300);
-        };
-        reader.onerror = function() { showToast("Failed to read the file!"); };
-        reader.readAsText(file);
-        event.target.value = '';
+    printArea.innerHTML = "";
+    let includedMonths = 0;
+
+    months.forEach(info => {
+      // A month is included when at least ONE day has at least one checked box.
+      const monthHasAnyTick = Array.from(info.days.values())
+        .some(values => values.some(Boolean));
+
+      if (!monthHasAnyTick) return;
+
+      includedMonths++;
+
+      const page = document.createElement("div");
+      page.className = "page";
+
+      const table = document.createElement("table");
+      table.className = "namaz-table";
+      table.innerHTML = `
+        <colgroup>
+          <col class="date-column">
+          <col class="namaz-column">
+          <col class="namaz-column">
+          <col class="namaz-column">
+          <col class="namaz-column">
+          <col class="namaz-column">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>DATE</th>
+            <th>फज्र</th>
+            <th>जुहर</th>
+            <th>असर</th>
+            <th>मगरिब</th>
+            <th>ईशा</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      `;
+
+      const tbody = table.querySelector("tbody");
+      const daysInMonth = new Date(info.year, info.month + 1, 0).getDate();
+
+      // COMPLETE month data: every day of an included month is shown.
+      for (let day = 1; day <= daysInMonth; day++) {
+        const values = info.days.get(day) || [false, false, false, false, false];
+
+        const row = document.createElement("tr");
+        if (values.every(Boolean)) row.classList.add("completed-row");
+
+        const dateCell = document.createElement("td");
+        const date = new Date(info.year, info.month, day);
+        const dayText = String(day).padStart(2, "0");
+        const monthText = date.toLocaleDateString("en-US", {
+          month: "short"
+        }).toUpperCase();
+
+        // Exact requested format: 01 AUG 2025
+        dateCell.textContent = `${dayText} ${monthText} ${info.year}`;
+        dateCell.className = "date-cell";
+        row.appendChild(dateCell);
+
+        values.forEach(checked => {
+          const cell = document.createElement("td");
+          cell.className = "namaz-cell";
+          cell.innerHTML = checkMarkup(checked);
+          row.appendChild(cell);
+        });
+
+        tbody.appendChild(row);
+      }
+
+      // No month title/text above the table.
+      page.appendChild(table);
+      printArea.appendChild(page);
+    });
+
+    if (!includedMonths) {
+      throw new Error("No checked Namaz records found in this JSON file.");
     }
 
-    function handlePrint() {
-        setTimeout(() => {
-            try { window.print(); } catch (err) { showToast("Print blocked. Share screen instead."); }
-        }, 150);
+    document.title = profileName
+      ? "Namaz Report - " + profileName
+      : "Namaz Report";
+  }
+
+  function showPreview() {
+    const home = $("homeView");
+    const preview = $("previewView");
+
+    if (home) {
+      home.style.opacity = "0";
+      setTimeout(() => { home.style.display = "none"; }, 180);
     }
 
-    const svgCheck = `<svg viewBox="0 0 24 24" width="70%" height="70%" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
-    const fullMonths = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
-    const shortMonths = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+    if (preview) {
+      preview.style.display = "block";
+      requestAnimationFrame(() => {
+        preview.style.opacity = "1";
+        preview.scrollTop = 0;
+        window.scrollTo(0, 0);
+      });
+    }
+  }
 
-    // NEW ROBUST DATA EXTRACTOR
-    function processCode(rawInput) {
-        try {
-            let dataString = rawInput.trim();
-            // Decode Base64 if needed
-            if (!dataString.startsWith('{') && !dataString.startsWith('[')) {
-                try { dataString = atob(dataString.replace(/[^A-Za-z0-9+/=]/g, "")); } catch (e) {}
-            }
-            
-            let jsonData = JSON.parse(dataString);
-            if (jsonData.data) jsonData = jsonData.data; 
-            else if (jsonData.logs) jsonData = jsonData.logs;
+  function closePreview() {
+    const preview = $("previewView");
+    const home = $("homeView");
 
-            const normalizedData = {}; // Format: { "2023_10": { "1": {f:1, z:0, ...} } }
-
-            const setNamaz = (y, m, d, f, z, a, mag, i) => {
-                if (isNaN(y) || isNaN(m) || isNaN(d)) return;
-                let key = `${y}_${m}`;
-                if (!normalizedData[key]) normalizedData[key] = {};
-                normalizedData[key][d] = { 
-                    f: !!(f), z: !!(z), a: !!(a), m: !!(mag), i: !!(i) 
-                };
-            };
-
-            // Loop and Extract Logic
-            if (Array.isArray(jsonData)) {
-                jsonData.forEach(item => {
-                    if (item.date) {
-                        let dObj = new Date(item.date);
-                        setNamaz(dObj.getFullYear(), dObj.getMonth(), dObj.getDate(), 
-                            item.fajr||item.f, item.zuhr||item.dhuhr||item.z||item.d, 
-                            item.asr||item.a, item.maghrib||item.m, item.isha||item.i);
-                    } else if (item.year !== undefined && item.month !== undefined && item.days) {
-                        let daysStr = typeof item.days === 'string' ? item.days : item.days.join('');
-                        for (let i = 0; i < daysStr.length; i++) {
-                            let val = parseInt(daysStr[i], 36) || 0;
-                            setNamaz(item.year, item.month, i + 1, val&1, val&2, val&4, val&8, val&16);
-                        }
-                    }
-                });
-            } else if (typeof jsonData === 'object') {
-                Object.keys(jsonData).forEach(key => {
-                    let val = jsonData[key];
-                    let parts = key.split('_');
-                    
-                    if (parts.length === 2) {
-                        let y = parseInt(parts[0]);
-                        let m = parseInt(parts[1]);
-                        let daysStr = typeof val === 'string' ? val : (Array.isArray(val) ? val.join('') : (val.days ? (Array.isArray(val.days) ? val.days.join('') : val.days) : null));
-                        
-                        if (typeof daysStr === 'string') {
-                            for (let i = 0; i < daysStr.length; i++) {
-                                let v = parseInt(daysStr[i], 36) || 0;
-                                setNamaz(y, m, i + 1, v&1, v&2, v&4, v&8, v&16);
-                            }
-                        }
-                    }
-                });
-            }
-
-            const sortedKeys = Object.keys(normalizedData).sort((a, b) => {
-                const [yearA, monthA] = a.split('_').map(Number);
-                const [yearB, monthB] = b.split('_').map(Number);
-                return yearA !== yearB ? yearA - yearB : monthA - monthB;
-            });
-
-            if (sortedKeys.length === 0) { 
-                showToast("No proper Namaz tracker data found in file."); return; 
-            }
-
-            // Generate UI
-            const printArea = document.getElementById('printArea');
-            printArea.innerHTML = '';
-            
-            sortedKeys.forEach((key) => {
-                const [year, monthIndex] = key.split('_').map(Number);
-                const monthData = normalizedData[key];
-                const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
-                
-                const page = document.createElement('div');
-                page.className = 'page';
-                
-                // Add Month Title
-                const monthTitle = document.createElement('div');
-                monthTitle.className = 'month-title';
-                monthTitle.innerText = `${fullMonths[monthIndex]} ${year}`;
-                page.appendChild(monthTitle);
-
-                const table = document.createElement('table');
-                table.innerHTML = `
-                    <thead>
-                        <tr>
-                            <th class="primary-col" style="width:25%;"><span class="pill-header">DATE</span></th>
-                            <th style="width:15%;"><span class="pill-header">फज्र</span></th>
-                            <th style="width:15%;"><span class="pill-header">जुहर</span></th>
-                            <th style="width:15%;"><span class="pill-header">असर</span></th>
-                            <th style="width:15%;"><span class="pill-header">मगरिब</span></th>
-                            <th style="width:15%;"><span class="pill-header">ईशा</span></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                `;
-                const tbody = table.querySelector('tbody');
-                
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const dd = String(day).padStart(2, '0');
-                    const formattedDate = `${dd} ${shortMonths[monthIndex]}`;
-                    
-                    let dayData = monthData[day] || { f:false, z:false, a:false, m:false, i:false };
-                    const allCompleted = dayData.f && dayData.z && dayData.a && dayData.m && dayData.i;
-                    
-                    const row = document.createElement('tr');
-                    if (allCompleted) row.className = 'completed-row';
-                    
-                    const createPillBox = (isChecked) => {
-                        const c = isChecked ? (allCompleted ? 'pill-check completed' : 'pill-check checked') : 'pill-check';
-                        return `<div class="${c}">${isChecked ? svgCheck : ''}</div>`;
-                    };
-
-                    row.innerHTML = `
-                        <td><div class="pill-date">${formattedDate}</div></td>
-                        <td>${createPillBox(dayData.f)}</td>
-                        <td>${createPillBox(dayData.z)}</td>
-                        <td>${createPillBox(dayData.a)}</td>
-                        <td>${createPillBox(dayData.m)}</td>
-                        <td>${createPillBox(dayData.i)}</td>
-                    `;
-                    tbody.appendChild(row);
-                }
-                page.appendChild(table);
-                printArea.appendChild(page);
-            });
-
-            document.getElementById('homeView').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('homeView').style.display = 'none';
-                const pView = document.getElementById('previewView');
-                pView.style.display = 'block';
-                void pView.offsetWidth; 
-                pView.scrollTop = 0;
-                pView.style.opacity = '1';
-                showToast("PDF Preview Ready!", true);
-            }, 300); 
-
-        } catch (err) {
-            console.error("Parse Error:", err);
-            showToast("Invalid data structure in JSON.");
-        }
+    if (preview) {
+      preview.style.opacity = "0";
+      setTimeout(() => { preview.style.display = "none"; }, 180);
     }
 
-    function closePreview() {
-        const pView = document.getElementById('previewView');
-        const hView = document.getElementById('homeView');
-        pView.style.opacity = '0';
-        setTimeout(() => {
-            pView.style.display = 'none';
-            hView.style.display = 'block';
-            void hView.offsetWidth; 
-            hView.style.opacity = '1';
-        }, 300);
+    if (home) {
+      setTimeout(() => {
+        home.style.display = "block";
+        requestAnimationFrame(() => home.style.opacity = "1");
+        window.scrollTo(0, 0);
+      }, 190);
     }
-  </script>
+  }
+
+  function handlePrint() {
+    if (!$("printArea") || !$("printArea").children.length) {
+      showToast("Please upload a JSON file first.");
+      return;
+    }
+    setTimeout(() => window.print(), 80);
+  }
+
+  async function generateFromFile(file) {
+    if (!file) {
+      showToast("Please select your Namaz Tracker .json file.");
+      return;
+    }
+
+    if (!validJsonFile(file)) {
+      showToast("Only a .json backup file is supported.");
+      return;
+    }
+
+    const button = $("generateBtn");
+    const nameEl = $("selectedFileName");
+
+    try {
+      if (button) button.disabled = true;
+      if (nameEl) nameEl.textContent = "Reading " + file.name + "…";
+
+      const raw = await file.text();
+      if (!raw.trim()) throw new Error("The JSON file is empty.");
+
+      let payload;
+      try {
+        payload = JSON.parse(raw);
+      } catch (_) {
+        throw new Error("Invalid JSON. Please upload the original Namaz Tracker backup.json.");
+      }
+
+      const state = getState(payload);
+      if (!state) {
+        throw new Error('This file does not contain "namazState".');
+      }
+
+      const profileName =
+        typeof payload.profileName === "string"
+          ? payload.profileName.trim()
+          : "";
+
+      renderPDF(state, profileName);
+
+      if (nameEl) {
+        nameEl.textContent = "✓ " + file.name + " • Ready";
+      }
+
+      showPreview();
+    } catch (error) {
+      console.error(error);
+      if (nameEl) nameEl.textContent = "No file selected";
+      if ($("jsonFile")) $("jsonFile").value = "";
+      selectedJsonFile = null;
+      showToast(error.message || "Unable to read the JSON file.");
+    } finally {
+      if (button) button.disabled = !selectedJsonFile;
+    }
+  }
+
+  function initUploader() {
+    const input = $("jsonFile");
+    const zone = $("fileDropZone");
+    const button = $("generateBtn");
+
+    if (!input || !zone || !button) {
+      console.error("JSON uploader elements missing.");
+      return;
+    }
+
+    zone.addEventListener("click", openPicker);
+
+    zone.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openPicker();
+      }
+    });
+
+    input.addEventListener("change", event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+
+      selectedJsonFile = file;
+      $("selectedFileName").textContent = "Selected: " + file.name;
+      button.disabled = false;
+    });
+
+    button.addEventListener("click", () => {
+      if (selectedJsonFile) {
+        generateFromFile(selectedJsonFile);
+      } else {
+        openPicker();
+      }
+    });
+
+    ["dragenter", "dragover"].forEach(type => {
+      zone.addEventListener(type, event => {
+        event.preventDefault();
+        zone.classList.add("dragover");
+      });
+    });
+
+    ["dragleave", "drop"].forEach(type => {
+      zone.addEventListener(type, event => {
+        event.preventDefault();
+        zone.classList.remove("dragover");
+      });
+    });
+
+    zone.addEventListener("drop", event => {
+      const file = event.dataTransfer &&
+                   event.dataTransfer.files &&
+                   event.dataTransfer.files[0];
+
+      if (!file) return;
+
+      if (!validJsonFile(file)) {
+        showToast("Please drop a .json backup file.");
+        return;
+      }
+
+      selectedJsonFile = file;
+      $("selectedFileName").textContent = "Selected: " + file.name;
+      button.disabled = false;
+
+      // Dropped files generate immediately.
+      generateFromFile(file);
+    });
+  }
+
+  window.closePreview = closePreview;
+  window.handlePrint = handlePrint;
+
+  window.addEventListener("load", () => {
+    const splash = $("splashScreen");
+    const home = $("homeView");
+
+    initUploader();
+
+    setTimeout(() => {
+      if (splash) splash.style.opacity = "0";
+      if (home) {
+        home.style.display = "block";
+        requestAnimationFrame(() => home.style.opacity = "1");
+      }
+
+      setTimeout(() => {
+        if (splash) splash.style.display = "none";
+      }, 500);
+    }, 900);
+  });
+})();
+</script>
 </body>
 </html>

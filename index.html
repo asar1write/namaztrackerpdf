@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Namaz Tracker - A4 Perfect Print Edition</title>
+  <title>Namaz Tracker - Premium Pill UI</title>
   
   <!-- Premium Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -22,9 +22,7 @@
       -ms-overflow-style: none;  
       scrollbar-width: none;  
     }
-    body::-webkit-scrollbar, div::-webkit-scrollbar {
-      display: none; 
-    }
+    body::-webkit-scrollbar, div::-webkit-scrollbar { display: none; }
 
     /* =========================================
        ROCK-SOLID VIEW ENGINE
@@ -59,9 +57,6 @@
       position: relative; z-index: 5; margin: 120px auto 40px auto; 
     }
 
-    /* =========================================
-       HOME VIEW UI ELEMENTS
-       ========================================= */
     .icon-top {
       width: 55px; height: 55px; background: #ecfdf5; border-radius: 16px; display: flex; justify-content: center; align-items: center;
       margin: 0 auto 15px auto; color: #047857; box-shadow: 0 6px 12px rgba(4, 120, 87, 0.15);
@@ -72,9 +67,6 @@
     .main-heading { font-family: 'Outfit', sans-serif; color: #0f172a; font-size: 1.8em; font-weight: 800; margin-bottom: 5px; }
     .sub-heading { font-family: 'Poppins', sans-serif; color: #64748b; font-size: 0.85em; font-weight: 500; margin-bottom: 25px; line-height: 1.4; }
 
-    /* =========================================
-       LARGE UPLOAD BUTTON
-       ========================================= */
     .btn-action { 
         position: relative; overflow: hidden;
         background: linear-gradient(135deg, #059669, #10b981); color: #fff; 
@@ -91,81 +83,14 @@
        ========================================= */
     #previewView {
       z-index: 20; background: #0f172a; 
-      display: none; 
-      opacity: 0;
+      display: none; opacity: 0;
       overflow-y: auto; overflow-x: hidden;
-      padding: 85px 10px 140px 10px;
-      min-height: 100vh;
+      padding: 85px 10px 140px 10px; min-height: 100vh;
       -webkit-overflow-scrolling: touch;
     }
-    
-    /* =========================================
-       ROYAL SPLASH SCREEN
-       ========================================= */
-    #splashScreen {
-      position: fixed; inset: 0; background: #011208; 
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      z-index: 9999; transition: opacity 0.5s ease-out;
-    }
 
-    .splash-glow {
-      position: absolute; width: 350px; height: 350px;
-      background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(1, 18, 8, 0) 70%);
-      border-radius: 50%; animation: pulseGlow 2.5s ease-in-out infinite alternate;
-    }
-    @keyframes pulseGlow { 0% { transform: scale(0.85); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
-    .splash-content { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; width: 100%; padding: 0 20px; }
-
-    .svg-icon-wrapper { width: 110px; height: 110px; margin-bottom: 18px; display: flex; justify-content: center; align-items: center; }
-    .splash-svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0px 10px 20px rgba(253, 224, 71, 0.2)); }
-    .svg-path { stroke-dasharray: 400; stroke-dashoffset: 400; fill-opacity: 0; animation: drawLine 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards, fillIcon 0.6s ease-out 0.8s forwards; }
-    .ring-spin { transform-origin: 50px 50px; animation: spinRing 12s linear infinite; }
-    @keyframes drawLine { to { stroke-dashoffset: 0; } }
-    @keyframes fillIcon { to { fill-opacity: 1; filter: drop-shadow(0px 6px 12px rgba(253, 224, 71, 0.35)); } }
-    @keyframes spinRing { to { transform: rotate(360deg); } }
-
-    .text-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; }
-    .splash-title {
-      font-family: 'Outfit', sans-serif; font-size: 1.85em; font-weight: 900; letter-spacing: 3px; margin: 0; padding: 0; text-transform: uppercase;
-      background: linear-gradient(90deg, #FDE047, #ffffff, #FDE047); background-size: 200% auto;
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 0; transform: translateY(12px);
-      filter: drop-shadow(0px 0px 10px rgba(253, 224, 71, 0.4));
-      animation: popUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.5s forwards, shineText 3s linear infinite 1s;
-    }
-    .glowing-line {
-      width: 0px; height: 2.5px; background: linear-gradient(90deg, transparent, #34D399, transparent); margin: 8px 0; border-radius: 5px;
-      box-shadow: 0 0 8px rgba(52, 211, 153, 0.8); opacity: 0; animation: expandLine 0.6s ease-out 0.8s forwards;
-    }
-    .splash-subtitle {
-      font-family: 'Poppins', sans-serif; color: #a7f3d0; font-size: 0.75em; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; 
-      opacity: 0; text-shadow: 0 0 6px rgba(52, 211, 153, 0.5); animation: popUpFade 0.6s ease-out 0.9s forwards;
-    }
-    @keyframes shineText { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
-    @keyframes popUpFade { to { opacity: 1; transform: translateY(0); } }
-    @keyframes expandLine { to { width: 120px; opacity: 1; } }
-
-    /* =========================================
-       TOAST NOTIFICATION
-       ========================================= */
-    .custom-toast {
-      position: fixed; top: 20px; left: 50%; transform: translate(-50%, -40px) scale(0.9);
-      background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      color: #fff; padding: 12px 24px; border-radius: 40px; font-size: 0.9em; font-weight: 600;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); z-index: 10000; display: flex; align-items: center; gap: 8px;
-      width: max-content; max-width: 90vw; opacity: 0; pointer-events: none;
-      transition: transform 0.35s ease, opacity 0.25s ease;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-    .custom-toast.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
-    .toast-icon { width: 18px; height: 18px; color: #f87171; }
-    .toast-icon.success { color: #34d399; }
-
-    /* =========================================
-       PREVIEW CONTROLS & PAGES
-       ========================================= */
     .preview-controls {
-        position: fixed; top: 12px; 
-        left: 50%; transform: translateX(-50%);
+        position: fixed; top: 12px; left: 50%; transform: translateX(-50%);
         width: 92%; max-width: 380px; z-index: 1000; display: flex; justify-content: space-between; gap: 10px;
         background: rgba(30, 41, 59, 0.88); padding: 8px 12px; border-radius: 100px;
         backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -174,8 +99,7 @@
     
     .btn-secondary { 
         font-family: 'Outfit', sans-serif; background: rgba(255,255,255,0.08); color: #fff; border: 1px solid rgba(255,255,255,0.05); 
-        padding: 10px 16px; border-radius: 50px; flex: 1; font-weight: 700; font-size: 0.95em; cursor: pointer;
-        transition: background 0.15s ease;
+        padding: 10px 16px; border-radius: 50px; flex: 1; font-weight: 700; font-size: 0.95em; cursor: pointer; transition: background 0.15s ease;
     }
     .btn-secondary:active { background: rgba(255,255,255,0.2); }
 
@@ -189,56 +113,59 @@
     #printArea { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; margin: 0 auto; }
     
     /* =========================================
-       SCREEN PREVIEW: A4 STYLING
+       SCREEN PREVIEW: A4 STYLING & PILL UI
        ========================================= */
     .page {
-        width: 100%; 
-        max-width: 750px; 
-        aspect-ratio: 1 / 1.4142; /* Strict A4 proportion on screen */
-        padding: 8px; 
-        background: #fff; 
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-        border-radius: 6px; 
-        display: flex; flex-direction: column;
+        width: 100%; max-width: 750px; aspect-ratio: 1 / 1.4142;
+        padding: 15px; background: #fff; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        border-radius: 12px; display: flex; flex-direction: column;
     }
 
+    /* Month Title */
+    .month-title {
+        text-align: center; font-family: 'Outfit', sans-serif; font-size: 1.2em; font-weight: 800;
+        color: #047857; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px;
+    }
+
+    /* Table Reset for Pill Design */
     table { 
-        width: 100%; 
-        height: 100%; 
-        border-collapse: collapse; 
-        table-layout: fixed; 
-        font-family: 'Poppins', sans-serif; 
-        text-transform: uppercase;
+        width: 100%; height: 100%; border-collapse: separate; border-spacing: 0 5px; 
+        table-layout: fixed; font-family: 'Poppins', sans-serif; text-transform: uppercase;
     }
     
-    th, td { border: 1.2px solid #cbd5e1; text-align: center; font-weight: 700; padding: 0; vertical-align: middle; }
+    th, td { text-align: center; font-weight: 700; padding: 2px; vertical-align: middle; border: none; }
     
-    th { 
-        background: #047857; color: #fff; 
-        height: 30px; 
-        font-size: clamp(9px, 2vw, 13px); 
+    /* Pill Headers */
+    th { color: #1e293b; font-size: clamp(9px, 2vw, 12px); font-family: 'Outfit', sans-serif; }
+    th .pill-header {
+        background: #e2e8f0; color: #0f172a; border-radius: 50px; padding: 6px 4px;
+        display: block; margin: 0 2px; font-weight: 800; letter-spacing: 0.5px;
     }
-    
-    td { 
-        font-size: clamp(8px, 1.8vw, 11px); 
-        color: #1e293b; 
+    th.primary-col .pill-header { background: #047857; color: #fff; }
+
+    /* Pill Data Cells */
+    .pill-date {
+        background: #f1f5f9; color: #334155; border-radius: 50px; padding: 5px 8px;
+        font-size: clamp(8px, 1.8vw, 11px); font-weight: 800; letter-spacing: 0.5px; display: inline-block; width: 90%;
     }
-    
-    .checkbox-mock { 
-        width: clamp(10px, 2.5vw, 14px); 
-        height: clamp(10px, 2.5vw, 14px); 
-        border: 1.5px solid #cbd5e1; border-radius: 3px; 
+
+    .pill-check { 
+        width: clamp(14px, 3.5vw, 22px); height: clamp(14px, 3.5vw, 22px); 
+        border-radius: 50px; /* Perfect pill/circle shape */
         display: inline-flex; align-items: center; justify-content: center; 
-        background: #f8fafc; margin: 0 auto; 
+        background: #f8fafc; border: 2px solid #cbd5e1; margin: 0 auto; 
+        transition: all 0.2s;
     }
     
-    .checkbox-mock.checked { background: #10b981; border-color: #10b981; }
-    .checkbox-mock.completed { background: #059669; border-color: #059669; }
-    tr.completed-row td { background: #ecfdf5 !important; }
-    .day-label { letter-spacing: 0.2px; color: #0f172a; font-weight: 800; }
+    .pill-check.checked { background: #10b981; border-color: #10b981; box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3); }
+    .pill-check.completed { background: #059669; border-color: #059669; }
+
+    /* Row highlight if all completed */
+    tr.completed-row .pill-date { background: #d1fae5; color: #065f46; }
+    tr.completed-row .pill-check { border-color: #059669; }
 
     /* =========================================
-       STRICT PRINT STYLES (100% FIXED FOR ANDROID)
+       STRICT PRINT STYLES (PILL UI)
        ========================================= */
     @media print {
         @page { size: A4 portrait; margin: 0; }
@@ -248,35 +175,44 @@
         #printArea { display: block !important; gap: 0 !important; }
         
         .page { 
-            width: 210mm !important; 
-            height: 297mm !important;
-            max-width: none !important; 
-            aspect-ratio: auto !important; 
-            padding: 8mm !important; 
-            margin: 0 !important; 
-            box-shadow: none !important; 
-            border-radius: 0 !important; 
-            page-break-after: always !important; 
-            page-break-inside: avoid !important; 
+            width: 210mm !important; height: 297mm !important; max-width: none !important; aspect-ratio: auto !important; 
+            padding: 10mm !important; margin: 0 !important; box-shadow: none !important; border-radius: 0 !important; 
+            page-break-after: always !important; page-break-inside: avoid !important; 
         }
         
-        table { height: 100% !important; width: 100% !important; }
-        th { font-size: 14px !important; height: 35px !important; } 
-        td { font-size: 13px !important; height: auto !important; }
-        .day-label { font-size: 13.5px !important; }
-        .checkbox-mock { width: 16px !important; height: 16px !important; border-width: 1.5px !important; }
+        table { height: calc(100% - 30px) !important; width: 100% !important; border-spacing: 0 4px !important; }
+        
+        .month-title { font-size: 18px !important; margin-bottom: 8px !important; }
+        th .pill-header { font-size: 12px !important; padding: 6px 2px !important; margin: 0 1px !important; }
+        .pill-date { font-size: 11px !important; padding: 5px 4px !important; }
+        .pill-check { width: 18px !important; height: 18px !important; border-width: 1.5px !important; }
         
         * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     }
+
+    /* Toast Notification CSS (Hidden for brevity, same as before) */
+    .custom-toast {
+      position: fixed; top: 20px; left: 50%; transform: translate(-50%, -40px) scale(0.9); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); color: #fff; padding: 12px 24px; border-radius: 40px; font-size: 0.9em; font-weight: 600; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); z-index: 10000; display: flex; align-items: center; gap: 8px; width: max-content; max-width: 90vw; opacity: 0; pointer-events: none; transition: transform 0.35s ease, opacity 0.25s ease; border: 1px solid rgba(255,255,255,0.1);
+    }
+    .custom-toast.show { transform: translate(-50%, 0) scale(1); opacity: 1; }
+    .toast-icon { width: 18px; height: 18px; color: #f87171; }
+    .toast-icon.success { color: #34d399; }
+    
+    /* Splash CSS (Same as before) */
+    #splashScreen { position: fixed; inset: 0; background: #011208; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999; transition: opacity 0.5s ease-out; }
+    .splash-glow { position: absolute; width: 350px; height: 350px; background: radial-gradient(circle, rgba(16, 185, 129, 0.25) 0%, rgba(1, 18, 8, 0) 70%); border-radius: 50%; animation: pulseGlow 2.5s ease-in-out infinite alternate; }
+    @keyframes pulseGlow { 0% { transform: scale(0.85); opacity: 0.6; } 100% { transform: scale(1.15); opacity: 1; } }
+    .splash-content { display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2; width: 100%; padding: 0 20px; }
+    .svg-icon-wrapper { width: 110px; height: 110px; margin-bottom: 18px; display: flex; justify-content: center; align-items: center; }
+    .splash-title { font-family: 'Outfit', sans-serif; font-size: 1.85em; font-weight: 900; letter-spacing: 3px; margin: 0; padding: 0; text-transform: uppercase; background: linear-gradient(90deg, #FDE047, #ffffff, #FDE047); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; opacity: 1; filter: drop-shadow(0px 0px 10px rgba(253, 224, 71, 0.4)); }
+    .splash-subtitle { font-family: 'Poppins', sans-serif; color: #a7f3d0; font-size: 0.75em; font-weight: 600; letter-spacing: 5px; text-transform: uppercase; margin-top:5px; opacity: 1;}
   </style>
 </head>
 <body>
 
   <!-- TOAST NOTIFICATION -->
   <div id="toastNotification" class="custom-toast">
-    <svg id="toastIconSvg" class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>
-    </svg>
+    <svg id="toastIconSvg" class="toast-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></svg>
     <span id="toastMessage">Error Message</span>
   </div>
 
@@ -285,26 +221,15 @@
     <div class="splash-glow"></div>
     <div class="splash-content">
       <div class="svg-icon-wrapper">
-        <svg class="splash-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#FDE047" /><stop offset="100%" stop-color="#D97706" />
-            </linearGradient>
-            <linearGradient id="emeraldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#34D399" /><stop offset="100%" stop-color="#047857" />
-            </linearGradient>
-          </defs>
-          <circle cx="50" cy="50" r="45" stroke="url(#goldGradient)" stroke-width="0.8" stroke-dasharray="3 5" fill="none" class="ring-spin"/>
-          <path class="svg-path" d="M 50,15 A 35,35 0 1,0 85,50 A 30,30 0 1,1 50,15 Z" stroke="url(#goldGradient)" stroke-width="1.5" fill="url(#goldGradient)" stroke-linejoin="round"/>
-          <path class="svg-path" d="M 38 68 C 38 52, 44 48, 50 40 C 56 48, 62 52, 62 68 Z" stroke="url(#emeraldGradient)" stroke-width="1.5" fill="url(#emeraldGradient)" stroke-linejoin="round"/>
-          <path class="svg-path" d="M 36 68 L 64 68 Z" stroke="url(#emeraldGradient)" stroke-width="2.5" stroke-linecap="round"/>
-          <line class="svg-path" x1="50" y1="40" x2="50" y2="25" stroke="url(#emeraldGradient)" stroke-width="2" stroke-linecap="round"/>
-          <path class="svg-path" d="M 50 30 L 51 32.5 L 53.5 32.5 L 51.5 34 L 52.5 36.5 L 50 35 L 47.5 36.5 L 48.5 34 L 46.5 32.5 L 49 32.5 Z" fill="url(#goldGradient)" stroke="none" style="animation-delay: 0.5s; opacity: 0;"/>
+        <svg viewBox="0 0 100 100" style="width:100%; height:100%; filter: drop-shadow(0px 10px 20px rgba(253, 224, 71, 0.2));">
+          <circle cx="50" cy="50" r="45" stroke="#FDE047" stroke-width="0.8" stroke-dasharray="3 5" fill="none"/>
+          <path d="M 50,15 A 35,35 0 1,0 85,50 A 30,30 0 1,1 50,15 Z" stroke="#FDE047" stroke-width="1.5" fill="#FDE047" stroke-linejoin="round"/>
+          <path d="M 38 68 C 38 52, 44 48, 50 40 C 56 48, 62 52, 62 68 Z" stroke="#34D399" stroke-width="1.5" fill="#34D399" stroke-linejoin="round"/>
+          <path d="M 36 68 L 64 68 Z" stroke="#34D399" stroke-width="2.5" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="text-container">
         <h1 class="splash-title">NAMAZ TRACKER</h1>
-        <div class="glowing-line"></div>
         <p class="splash-subtitle">PDF GENERATOR</p>
       </div>
     </div>
@@ -313,30 +238,23 @@
   <!-- HOME VIEW -->
   <div id="homeView" class="view-section">
       <div class="app-header-bg"></div>
-      
       <div id="inputContainer">
         <div class="icon-top">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-            <polyline points="14 2 14 8 20 8"></polyline>
-            <line x1="12" y1="18" x2="12" y2="12"></line>
-            <line x1="9" y1="15" x2="12" y2="12"></line>
-            <line x1="15" y1="15" x2="12" y2="12"></line>
+            <polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line>
+            <line x1="9" y1="15" x2="12" y2="12"></line><line x1="15" y1="15" x2="12" y2="12"></line>
           </svg>
         </div>
         <h1 class="main-heading">Print Report</h1>
         <p class="sub-heading">Upload your downloaded <br><strong>.json</strong> backup file to generate PDF.</p>
         
-        <!-- HIDDEN FILE INPUT -->
         <input type="file" id="jsonFileInput" accept=".json,.txt" style="display: none;" onchange="handleFileSelect(event)">
         
-        <!-- BIG UPLOAD BUTTON -->
         <button type="button" class="btn-action" onclick="document.getElementById('jsonFileInput').click()">
           UPLOAD .JSON FILE
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
           </svg>
         </button>
       </div>
@@ -349,13 +267,11 @@
         <button class="btn-primary" onclick="handlePrint()">
             Print File
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                <polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                 <rect x="6" y="14" width="12" height="8"></rect>
             </svg>
         </button>
     </div>
-    
     <div id="printArea"></div>
   </div>
 
@@ -364,17 +280,11 @@
         setTimeout(() => {
             const splash = document.getElementById('splashScreen');
             const home = document.getElementById('homeView');
-            
             splash.style.opacity = '0';
             home.style.display = 'block';
             void home.offsetWidth; 
-            
-            setTimeout(() => { 
-                splash.style.display = 'none'; 
-                home.style.opacity = '1'; 
-            }, 500); 
-            
-        }, 2200); 
+            setTimeout(() => { splash.style.display = 'none'; home.style.opacity = '1'; }, 500); 
+        }, 1500); 
     });
 
     let toastTimeout;
@@ -382,9 +292,7 @@
         const toast = document.getElementById('toastNotification');
         const toastMsg = document.getElementById('toastMessage');
         const icon = document.getElementById('toastIconSvg');
-        
         toastMsg.innerText = message;
-        
         if (isSuccess) {
             icon.classList.add('success');
             icon.innerHTML = `<polyline points="20 6 9 17 4 12"></polyline>`;
@@ -392,324 +300,193 @@
             icon.classList.remove('success');
             icon.innerHTML = `<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>`;
         }
-
         toast.classList.add('show');
         clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => { toast.classList.remove('show'); }, 3000); 
     }
 
-    /* FILE UPLOAD HANDLER */
     function handleFileSelect(event) {
         const file = event.target.files[0];
         if (!file) return;
-
         const reader = new FileReader();
         reader.onload = function(e) {
-            const content = e.target.result;
-            showToast("File loaded successfully! Generating PDF...", true);
-            
-            // Generate Process call
-            setTimeout(() => {
-                processCode(content);
-            }, 500);
+            showToast("Processing data...", true);
+            setTimeout(() => { processCode(e.target.result); }, 300);
         };
-        reader.onerror = function() {
-            showToast("Failed to read the file! Please try a valid .json file.");
-        };
+        reader.onerror = function() { showToast("Failed to read the file!"); };
         reader.readAsText(file);
-        
-        // Reset file input so user can re-upload the same file if canceled
         event.target.value = '';
     }
 
     function handlePrint() {
         setTimeout(() => {
-            try {
-                window.print();
-            } catch (err) {
-                showToast("Print blocked. Please use share/print option from browser.");
-            }
+            try { window.print(); } catch (err) { showToast("Print blocked. Share screen instead."); }
         }, 150);
     }
 
-    const svgCheck = `<svg viewBox="0 0 24 24" width="100%" height="100%" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" style="padding: 1px;"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const svgCheck = `<svg viewBox="0 0 24 24" width="70%" height="70%" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
+    const fullMonths = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
     const shortMonths = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
-    
-    const homeView = document.getElementById('homeView');
-    const previewView = document.getElementById('previewView');
-    const printArea = document.getElementById('printArea');
 
+    // NEW ROBUST DATA EXTRACTOR
     function processCode(rawInput) {
-        if (!rawInput || !rawInput.trim()) { 
-            showToast("File is empty or invalid!"); 
-            return; 
-        }
-        
         try {
-            rawInput = rawInput.trim();
-            const imported = {};
-            let parsedJson = null;
-
-            // Step 1: Detect Base64 JSON or plain string
-            if (!rawInput.startsWith('{') && !rawInput.startsWith('[') && !rawInput.includes(':')) {
-                try {
-                    const cleanBase64 = rawInput.replace(/[^A-Za-z0-9+/=]/g, "");
-                    const decoded = atob(cleanBase64);
-                    if (decoded.startsWith('{') || decoded.startsWith('[')) {
-                        rawInput = decoded;
-                    }
-                } catch (e) {
-                    // Ignore Base64 decode errors
-                }
+            let dataString = rawInput.trim();
+            // Decode Base64 if needed
+            if (!dataString.startsWith('{') && !dataString.startsWith('[')) {
+                try { dataString = atob(dataString.replace(/[^A-Za-z0-9+/=]/g, "")); } catch (e) {}
             }
+            
+            let jsonData = JSON.parse(dataString);
+            if (jsonData.data) jsonData = jsonData.data; 
+            else if (jsonData.logs) jsonData = jsonData.logs;
 
-            // Step 2: Try JSON Parsing
-            try {
-                parsedJson = JSON.parse(rawInput);
-            } catch (e) {
-                parsedJson = null;
-            }
+            const normalizedData = {}; // Format: { "2023_10": { "1": {f:1, z:0, ...} } }
 
-            if (parsedJson) {
-                // Unwrap if JSON has a nested 'data' or 'logs' key
-                if (typeof parsedJson === 'object' && !Array.isArray(parsedJson) && parsedJson.data) {
-                    parsedJson = parsedJson.data;
-                }
+            const setNamaz = (y, m, d, f, z, a, mag, i) => {
+                if (isNaN(y) || isNaN(m) || isNaN(d)) return;
+                let key = `${y}_${m}`;
+                if (!normalizedData[key]) normalizedData[key] = {};
+                normalizedData[key][d] = { 
+                    f: !!(f), z: !!(z), a: !!(a), m: !!(mag), i: !!(i) 
+                };
+            };
 
-                // Sub-case A: Array of Objects
-                if (Array.isArray(parsedJson)) {
-                    parsedJson.forEach(item => {
-                        if (item.key && item.days) {
-                            imported[item.key] = typeof item.days === 'string' ? item.days : item.days.join('');
-                        } else if (item.year !== undefined && item.month !== undefined) {
-                            const key = `${item.year}_${item.month}`;
-                            if (typeof item.days === 'string') {
-                                imported[key] = item.days;
-                            } else if (Array.isArray(item.days)) {
-                                imported[key] = item.days.map(v => typeof v === 'number' ? v.toString(36) : '0').join('');
-                            }
-                        } else if (item.date) {
-                            const dObj = new Date(item.date);
-                            if (!isNaN(dObj.getTime())) {
-                                const y = dObj.getFullYear();
-                                const m = dObj.getMonth();
-                                const d = dObj.getDate();
-                                const key = `${y}_${m}`;
-                                
-                                let val = 0;
-                                if (item.fajr || item.f) val |= 1;
-                                if (item.zuhr || item.z || item.d) val |= 2;
-                                if (item.asr || item.a) val |= 4;
-                                if (item.maghrib || item.m) val |= 8;
-                                if (item.isha || item.i) val |= 16;
-
-                                if (!imported[key]) {
-                                    const daysInMonth = new Date(y, m + 1, 0).getDate();
-                                    imported[key] = new Array(daysInMonth).fill('0');
-                                } else if (typeof imported[key] === 'string') {
-                                    imported[key] = imported[key].split('');
-                                }
-                                
-                                if (d - 1 < imported[key].length) {
-                                    imported[key][d - 1] = val.toString(36);
-                                }
-                            }
+            // Loop and Extract Logic
+            if (Array.isArray(jsonData)) {
+                jsonData.forEach(item => {
+                    if (item.date) {
+                        let dObj = new Date(item.date);
+                        setNamaz(dObj.getFullYear(), dObj.getMonth(), dObj.getDate(), 
+                            item.fajr||item.f, item.zuhr||item.dhuhr||item.z||item.d, 
+                            item.asr||item.a, item.maghrib||item.m, item.isha||item.i);
+                    } else if (item.year !== undefined && item.month !== undefined && item.days) {
+                        let daysStr = typeof item.days === 'string' ? item.days : item.days.join('');
+                        for (let i = 0; i < daysStr.length; i++) {
+                            let val = parseInt(daysStr[i], 36) || 0;
+                            setNamaz(item.year, item.month, i + 1, val&1, val&2, val&4, val&8, val&16);
                         }
-                    });
-
-                    Object.keys(imported).forEach(k => {
-                        if (Array.isArray(imported[k])) {
-                            imported[k] = imported[k].join('');
-                        }
-                    });
-                } 
-                // Sub-case B: Key-Value JSON Object
-                else if (typeof parsedJson === 'object' && parsedJson !== null) {
-                    Object.keys(parsedJson).forEach(key => {
-                        const val = parsedJson[key];
-                        if (typeof val === 'string') {
-                            imported[key] = val;
-                        } else if (Array.isArray(val)) {
-                            imported[key] = val.map(v => (typeof v === 'number' ? v : parseInt(v, 10) || 0).toString(36)).join('');
-                        } else if (typeof val === 'object' && val !== null) {
-                            if (val.days) {
-                                imported[key] = Array.isArray(val.days) ? val.days.map(v => v.toString(36)).join('') : String(val.days);
-                            }
-                        }
-                    });
-                }
-            } 
-            // Step 3: Fallback logic for legacy formats
-            else {
-                let decodedStr = rawInput.replace(/\s+/g, "");
-
-                if (!decodedStr.includes(':') && !decodedStr.startsWith('{')) {
-                    try {
-                        const cleanBase64 = decodedStr.replace(/[^A-Za-z0-9+/=]/g, "");
-                        decodedStr = atob(cleanBase64);
-                    } catch (e) {
-                        // Fallback to raw string
                     }
-                }
-
-                decodedStr = decodedStr.replace(/\s+/g, "");
-
-                if (decodedStr.includes(':')) {
-                    const regex = /(\d+)-(\d+):([a-zA-Z0-9]+)/g;
-                    let match;
-                    let foundAny = false;
+                });
+            } else if (typeof jsonData === 'object') {
+                Object.keys(jsonData).forEach(key => {
+                    let val = jsonData[key];
+                    let parts = key.split('_');
                     
-                    while ((match = regex.exec(decodedStr)) !== null) {
-                        foundAny = true;
-                        let y = parseInt(match[1], 10);
-                        if (y < 100) y += 2000;
+                    if (parts.length === 2) {
+                        let y = parseInt(parts[0]);
+                        let m = parseInt(parts[1]);
+                        let daysStr = typeof val === 'string' ? val : (Array.isArray(val) ? val.join('') : (val.days ? (Array.isArray(val.days) ? val.days.join('') : val.days) : null));
                         
-                        let m = parseInt(match[2], 10);
-                        let daysStr = match[3];
-                        
-                        const key = `${y}_${m}`;
-                        imported[key] = daysStr;
-                    }
-                    
-                    if (!foundAny) {
-                        throw new Error("Invalid format inside code");
-                    }
-                } 
-                else {
-                    const entries = decodedStr.split('-');
-                    const monthlyData = {};
-                    
-                    entries.forEach(entry => {
-                        const parts = entry.split('.');
-                        if (parts.length >= 4) {
-                            let y = parseInt(parts[0], 10);
-                            if (isNaN(y)) return;
-                            if (y < 100) y += 2000;
-                            
-                            let m = parseInt(parts[1], 10);
-                            let d = parseInt(parts[2], 10);
-                            let valStr = parts[3];
-                            let val = parseInt(valStr, 36) || 0;
-                            
-                            if (isNaN(m) || isNaN(d)) return;
-                            
-                            const key = `${y}_${m}`;
-                            
-                            if (!monthlyData[key]) {
-                                const daysInMonth = new Date(y, m + 1, 0).getDate();
-                                monthlyData[key] = new Array(daysInMonth).fill(0);
-                            }
-                            
-                            if (d - 1 >= 0 && d - 1 < monthlyData[key].length) {
-                                monthlyData[key][d - 1] = val;
+                        if (typeof daysStr === 'string') {
+                            for (let i = 0; i < daysStr.length; i++) {
+                                let v = parseInt(daysStr[i], 36) || 0;
+                                setNamaz(y, m, i + 1, v&1, v&2, v&4, v&8, v&16);
                             }
                         }
-                    });
-                    
-                    Object.keys(monthlyData).forEach(key => {
-                        imported[key] = monthlyData[key].map(v => v.toString(36)).join('');
-                    });
-                }
+                    }
+                });
             }
 
-            const sortedKeys = Object.keys(imported).sort((a, b) => {
+            const sortedKeys = Object.keys(normalizedData).sort((a, b) => {
                 const [yearA, monthA] = a.split('_').map(Number);
                 const [yearB, monthB] = b.split('_').map(Number);
                 return yearA !== yearB ? yearA - yearB : monthA - monthB;
             });
 
             if (sortedKeys.length === 0) { 
-                showToast("No valid Namaz data found in this file!"); 
-                return; 
+                showToast("No proper Namaz tracker data found in file."); return; 
             }
 
-            homeView.style.opacity = '0';
-
-            setTimeout(() => {
-                homeView.style.display = 'none';
-                printArea.innerHTML = '';
+            // Generate UI
+            const printArea = document.getElementById('printArea');
+            printArea.innerHTML = '';
+            
+            sortedKeys.forEach((key) => {
+                const [year, monthIndex] = key.split('_').map(Number);
+                const monthData = normalizedData[key];
+                const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
                 
-                sortedKeys.forEach((key) => {
-                    const [year, monthIndex] = key.split('_').map(Number);
-                    const daysStr = imported[key];
-                    const daysInMonth = new Date(year, monthIndex + 1, 0).getDate();
+                const page = document.createElement('div');
+                page.className = 'page';
+                
+                // Add Month Title
+                const monthTitle = document.createElement('div');
+                monthTitle.className = 'month-title';
+                monthTitle.innerText = `${fullMonths[monthIndex]} ${year}`;
+                page.appendChild(monthTitle);
+
+                const table = document.createElement('table');
+                table.innerHTML = `
+                    <thead>
+                        <tr>
+                            <th class="primary-col" style="width:25%;"><span class="pill-header">DATE</span></th>
+                            <th style="width:15%;"><span class="pill-header">फज्र</span></th>
+                            <th style="width:15%;"><span class="pill-header">जुहर</span></th>
+                            <th style="width:15%;"><span class="pill-header">असर</span></th>
+                            <th style="width:15%;"><span class="pill-header">मगरिब</span></th>
+                            <th style="width:15%;"><span class="pill-header">ईशा</span></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                `;
+                const tbody = table.querySelector('tbody');
+                
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dd = String(day).padStart(2, '0');
+                    const formattedDate = `${dd} ${shortMonths[monthIndex]}`;
                     
-                    const page = document.createElement('div');
-                    page.className = 'page';
+                    let dayData = monthData[day] || { f:false, z:false, a:false, m:false, i:false };
+                    const allCompleted = dayData.f && dayData.z && dayData.a && dayData.m && dayData.i;
                     
-                    const table = document.createElement('table');
-                    table.innerHTML = `
-                        <thead>
-                            <tr>
-                                <th style="width:23%;">DATE</th>
-                                <th style="width:15.4%;">फज्र</th>
-                                <th style="width:15.4%;">जुहर</th>
-                                <th style="width:15.4%;">असर</th>
-                                <th style="width:15.4%;">मगरिब</th>
-                                <th style="width:15.4%;">ईशा</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
+                    const row = document.createElement('tr');
+                    if (allCompleted) row.className = 'completed-row';
+                    
+                    const createPillBox = (isChecked) => {
+                        const c = isChecked ? (allCompleted ? 'pill-check completed' : 'pill-check checked') : 'pill-check';
+                        return `<div class="${c}">${isChecked ? svgCheck : ''}</div>`;
+                    };
+
+                    row.innerHTML = `
+                        <td><div class="pill-date">${formattedDate}</div></td>
+                        <td>${createPillBox(dayData.f)}</td>
+                        <td>${createPillBox(dayData.z)}</td>
+                        <td>${createPillBox(dayData.a)}</td>
+                        <td>${createPillBox(dayData.m)}</td>
+                        <td>${createPillBox(dayData.i)}</td>
                     `;
-                    const tbody = table.querySelector('tbody');
-                    
-                    for (let day = 1; day <= daysInMonth; day++) {
-                        const dd = String(day).padStart(2, '0');
-                        const monthName = shortMonths[monthIndex];
-                        const formattedDate = `${dd} ${monthName} ${year}`;
-                        
-                        let val = 0;
-                        if (day - 1 < daysStr.length) {
-                            val = parseInt(daysStr[day - 1], 36) || 0;
-                        }
-                        
-                        const f = !!(val & 1), d = !!(val & 2), a = !!(val & 4), m = !!(val & 8), i = !!(val & 16);
-                        const allCompleted = f && d && a && m && i;
-                        
-                        const row = document.createElement('tr');
-                        if (allCompleted) row.className = 'completed-row';
-                        
-                        const createBox = (isChecked) => {
-                            const c = isChecked ? (allCompleted ? 'checkbox-mock completed' : 'checkbox-mock checked') : 'checkbox-mock';
-                            return `<div class="${c}">${isChecked ? svgCheck : ''}</div>`;
-                        };
+                    tbody.appendChild(row);
+                }
+                page.appendChild(table);
+                printArea.appendChild(page);
+            });
 
-                        row.innerHTML = `
-                            <td class="day-label">${formattedDate}</td>
-                            <td>${createBox(f)}</td>
-                            <td>${createBox(d)}</td>
-                            <td>${createBox(a)}</td>
-                            <td>${createBox(m)}</td>
-                            <td>${createBox(i)}</td>
-                        `;
-                        tbody.appendChild(row);
-                    }
-                    page.appendChild(table);
-                    printArea.appendChild(page);
-                });
-
-                previewView.style.display = 'block';
-                void previewView.offsetWidth; 
-                previewView.scrollTop = 0;
-                previewView.style.opacity = '1';
-
+            document.getElementById('homeView').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('homeView').style.display = 'none';
+                const pView = document.getElementById('previewView');
+                pView.style.display = 'block';
+                void pView.offsetWidth; 
+                pView.scrollTop = 0;
+                pView.style.opacity = '1';
+                showToast("PDF Preview Ready!", true);
             }, 300); 
 
         } catch (err) {
             console.error("Parse Error:", err);
-            showToast("Invalid format! Cannot read this .json file.");
-            homeView.style.opacity = '1';
+            showToast("Invalid data structure in JSON.");
         }
     }
 
     function closePreview() {
-        previewView.style.opacity = '0';
-        
+        const pView = document.getElementById('previewView');
+        const hView = document.getElementById('homeView');
+        pView.style.opacity = '0';
         setTimeout(() => {
-            previewView.style.display = 'none';
-            homeView.style.display = 'block';
-            void homeView.offsetWidth; 
-            homeView.style.opacity = '1';
+            pView.style.display = 'none';
+            hView.style.display = 'block';
+            void hView.offsetWidth; 
+            hView.style.opacity = '1';
         }, 300);
     }
   </script>
